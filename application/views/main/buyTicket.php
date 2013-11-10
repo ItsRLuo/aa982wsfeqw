@@ -5,16 +5,24 @@
 	
 	// Select a time.
 	echo form_label("Select a date: \n");	
+
+	$curr_timestamp = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
 	
+	$dateArray = array();
+	for ($i = 0; $i < 13; $i++) {
+		
+		$curr_timestamp = mktime(0, 0, 0, date("m", $curr_timestamp),
+				date("d", $curr_timestamp) + 1, date("Y", $curr_timestamp));
+		
+		$curr_date = date("D, M d, Y", mktime(0,0,0,date("m", $curr_timestamp),
+				date("d", $curr_timestamp),date("Y", $curr_timestamp)));
+		
+		array_push($dateArray, $curr_date);	
+		
+	}
 	
-// 	echo form_input("Month");
-// 	echo form_input("Day");
-// 	echo form_input("Year"
-	
-	echo form_dropdown('Month', $this->months, "Select a month", array("id" => "monthDropdown"));
-	echo form_dropdown('Day', $this->day, "Select a day", array("id" => "dayDropdown"));
-	echo form_dropdown('Year', $this->year, "Select a year", array("id" => "yearDropdown"));
-	echo "<br></br>";
+	echo form_dropdown("Days", $dateArray);
+	echo "<br/>";
 	
 	// Select a venue.
 	echo form_label("Select a venue AND/OR movie: \n");
