@@ -8,6 +8,7 @@ class Main extends CI_Controller {
     function __construct() {
     	// Call the Controller constructor
     	parent::__construct();
+    	session_start();
     	
     	$this->currYear = intval(date("Y"));
     	$this->months = array("Select a month", "January", "February", "March", "April", "May", "June",
