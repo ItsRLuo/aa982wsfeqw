@@ -21,12 +21,12 @@ class Main extends CI_Controller {
     	$this->load->view('template', $data);
     }
     
-    function buyTicketView() {
+    function selectMovieVenueView() {
     	
 
     	$this->load->model('theater_model');
     	$this->load->model('movie_model');
-    	$data['main']='main/buyTicket';
+    	$data['main']='main/selectMovieVenue';
     	$this->load->view('template', $data);
     	
     }
@@ -103,18 +103,13 @@ class Main extends CI_Controller {
     }
     
     function validate() {
-    	$this->load->model('movie_model');
-    	$this->load->model('theater_model');
-    	$this->load->model('showtime_model');
-    	$this->load->library("form_validation");
     	
-    	$this->form_validation->set_rules('Year', 'Year', 'greater_than[2020]');
+    	foreach ($_REQUEST as $item) {
+    		echo $item;
+    	}
+    	$data['main']='main/selectTicket';
+    	$this->load->view('template', $data);
     	
-		if ($this->form_validation->run() == TRUE) {	
-			redirect('main/selectTicket');
-		} else {
-			
-		}
     }
     
 //     function checkMonth($month) {

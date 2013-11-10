@@ -23,6 +23,7 @@
 	
 	echo form_dropdown("Days", $dateArray);
 	echo "<br/>";
+	echo $_SESSION["Days"];
 	
 	// Select a venue.
 	echo form_label("Select a venue AND/OR movie: \n");
