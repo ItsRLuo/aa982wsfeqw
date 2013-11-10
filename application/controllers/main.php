@@ -105,9 +105,14 @@ class Main extends CI_Controller {
     
     function validate() {
     	
-    	foreach ($_REQUEST as $item) {
-    		echo $item;
-    	}
+    	$date = $_POST["Days"];
+    	$movie = $_POST["Movies"];
+    	$theater = $_POST["Theaters"];
+		echo $date . "<br/>";
+		echo $movie. "<br/>";
+		echo $theater. "<br/>";
+    	
+    	
     	$data['main']='main/selectTicket';
     	$this->load->view('template', $data);
     	

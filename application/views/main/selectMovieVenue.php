@@ -17,12 +17,12 @@
 		$curr_date = date("D, M d, Y", mktime(0,0,0,date("m", $curr_timestamp),
 				date("d", $curr_timestamp),date("Y", $curr_timestamp)));
 		
-		array_push($dateArray, $curr_date);	
+		$dateArray[$curr_date] = $curr_date;
 		
 	}
 	
 	echo form_dropdown("Days", $dateArray);
-	echo $_POST["Days"]; 
+	
 	echo "<br/>"; 
 	
 	// Select a venue.
