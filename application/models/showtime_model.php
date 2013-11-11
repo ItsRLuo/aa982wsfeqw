@@ -36,7 +36,7 @@ class Showtime_model extends CI_Model {
 
 	function get_specific_showtimes($movie, $theater, $date)
 	{
-		$date = date("Y-d-m", strtotime($date));
+		$date = date("Y-m-d", strtotime($date));
 // 		/echo $date;
 		
 		$qstring = "select m.title, t.name, t.address, s.date, s.time, s.available
@@ -55,8 +55,8 @@ class Showtime_model extends CI_Model {
 			$adjusted_qstring .= " and m.title = \"$movie\"";
 		}
 		if ($date != "") {
-			$qstring .= " and s.date = \"$date\"";
-			$adjusted_qstring .= " and s.date = \"$date\"";
+			$qstring .= " and s.date = '$date'";
+			$adjusted_qstring .= " and s.date = '$date'";
 		}
 		$qstring .= ";";
 		

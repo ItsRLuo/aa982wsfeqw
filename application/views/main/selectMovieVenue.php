@@ -1,6 +1,6 @@
 <?php
 
-	
+	echo "<h1>Venue and Movie Selection</h1>";
 	echo form_open("main/validate");
 	
 	// Select a time.
@@ -23,18 +23,16 @@
 	
 	echo form_dropdown("Days", $dateArray);
 	
-	echo "<br/>"; 
+	echo "<br/><br/>"; 
 	
 	// Select a venue.
 	echo form_label("Select a venue AND/OR movie: \n");
 	$theater_names = array("" => "All venues");
 	$query_theater_names = $this->theater_model->get_theater_names();
 	foreach ($query_theater_names->result() as $theater_name) {
-		echo $theater_name->name;
 		$theater_names[$theater_name->name] = $theater_name->name;
 	}
 	echo form_dropdown("Theaters", $theater_names);
-// 	echo form_input("Theaters");
 	echo "<br></br>";
 
 	// Select a movie.
@@ -49,7 +47,6 @@
 	
 	// Find a movie!
 	echo form_submit('Search for Movie', 'Search for Movie');
-	
 	
 	echo form_close();
 	

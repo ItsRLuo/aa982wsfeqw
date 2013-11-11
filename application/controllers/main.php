@@ -105,10 +105,24 @@ class Main extends CI_Controller {
     
     function validate() {
     	
+    	$this->load->library('form_validation');
+    	$this->form_validation->set_rules("Movies", "Movies", "checkName");
+    	if ($this->form_validation->run() == FALSE) {
+    		
+    	}
+    		
+    	else {
+    	
+    	}
+    	
+    	
+    	
     	$date = $_POST["Days"];
+    	
     	if (isset($_POST["Movies"])) {
     		$movie = $_POST["Movies"];
     	}
+    	
     	if (isset($_POST["Theaters"])) {
     		$theater = $_POST["Theaters"];
     	}
@@ -120,9 +134,11 @@ class Main extends CI_Controller {
     	
     }
     
-//     function checkMonth($month) {
-//     	return $month == "2013";
-//     }
+	function checkName($str) {
+	
+		return $str != "All films";
+		
+	}
     
 }
 
