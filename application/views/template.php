@@ -12,9 +12,14 @@
 base_url = '<?= base_url();?>';
 //]]>
 </script>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.0.min.js" />
+
 <script type="text/javascript" src="<?php echo base_url();?>js/prototype.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>js/scriptaculous.js" ></script>
 <script type="text/javascript" src="<?php echo base_url();?>js/customtools.js" ></script>
+
+<script type="text/javascript" src="<?php echo base_url();?>js/scripts/singleCheckboxes.js"></script>
 </head>
 <body>
 <div id="wrapper">

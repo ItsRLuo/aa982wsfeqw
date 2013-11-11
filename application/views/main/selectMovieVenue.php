@@ -27,20 +27,21 @@
 	
 	// Select a venue.
 	echo form_label("Select a venue AND/OR movie: \n");
-	$theater_names = array("All venues");
+	$theater_names = array("" => "All venues");
 	$query_theater_names = $this->theater_model->get_theater_names();
 	foreach ($query_theater_names->result() as $theater_name) {
-		array_push($theater_names, $theater_name->name);
+		echo $theater_name->name;
+		$theater_names[$theater_name->name] = $theater_name->name;
 	}
 	echo form_dropdown("Theaters", $theater_names);
 // 	echo form_input("Theaters");
 	echo "<br></br>";
 
 	// Select a movie.
-	$movie_names = array("All films");
+	$movie_names = array("" => "All films");
 	$query_movie_names = $this->movie_model->get_movie_names();
 	foreach ($query_movie_names->result() as $movie_name) {
-		array_push($movie_names, $movie_name->title);
+		$movie_names[$movie_name->title] = $movie_name->title;
 	}
 	echo form_dropdown("Movies", $movie_names);	
 // 	echo form_input("Movies");

@@ -106,12 +106,14 @@ class Main extends CI_Controller {
     function validate() {
     	
     	$date = $_POST["Days"];
-    	$movie = $_POST["Movies"];
-    	$theater = $_POST["Theaters"];
-		echo $date . "<br/>";
-		echo $movie. "<br/>";
-		echo $theater. "<br/>";
+    	if (isset($_POST["Movies"])) {
+    		$movie = $_POST["Movies"];
+    	}
+    	if (isset($_POST["Theaters"])) {
+    		$theater = $_POST["Theaters"];
+    	}
     	
+		$this->load->model('showtime_model');
     	
     	$data['main']='main/selectTicket';
     	$this->load->view('template', $data);
