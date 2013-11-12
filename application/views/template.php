@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title><?php echo $title; ?></title>
+  <title> <?php echo $title; ?> </title>
 <link href="<?php echo base_url();?>css/default.css" rel="stylesheet" type="text/css" />
 <noscript>Javascript is not enabled! Please turn on Javascript to use this site.</noscript>
 

@@ -9,16 +9,11 @@ class Main extends CI_Controller {
     	// Call the Controller constructor
     	parent::__construct();
     	session_start();
-    	
-    	$this->currYear = intval(date("Y"));
-    	$this->months = array("Select a month", "January", "February", "March", "April", "May", "June",
-    			"July", "August", "September", "October", "November", "December");
-    	$this->day = array_merge(array("Select a day"), range(1, 31));
-    	$this->year = array_merge(array("Select a year"), range($this->currYear, $this->currYear + 50));
     }
         
     function index() {
     	$data['main']='main/index';
+    	$data['title'] = 'U of T Theater - Home Page';
     	$this->load->view('template', $data);
     }
     
@@ -27,7 +22,12 @@ class Main extends CI_Controller {
 
     	$this->load->model('theater_model');
     	$this->load->model('movie_model');
+    	
+    	
+    	$data['title'] = 'U of T Theater - Select a Venue';
     	$data['main']='main/selectMovieVenue';
+
+    	
     	$this->load->view('template', $data);
     	
     }
@@ -58,6 +58,7 @@ class Main extends CI_Controller {
 		}
 		
 		//Now we are prepared to call the view, passing all the necessary variables inside the $data array
+		$data['title'] = 'U of T Theater - Showtimes';
 		$data['main']='main/showtimes';
 		$this->load->view('template', $data);
     }
@@ -99,46 +100,77 @@ class Main extends CI_Controller {
     	$this->load->model('showtime_model');
     	
     	$data['main']='main/selectTicket';
+    	$data['title'] = 'U of T Theater - Select a Ticket';
     	$this->load->view('template', $data);
     	
+    }
+
+    public function movie_and_theater_both_not_empty($str)  {
+    	
+    	if (empty($str) and empty($_POST["Theaters"]))  
+    	{
+    		$this->form_validation->set_message("movie_and_theater_both_not_empty", "%s You must provide a venue AND/OR a movie!");
+    		return FALSE;
+    	}
+    	else
+    	{
+    		return TRUE;
+    	}
+    }
+    
+    function strbool($s)
+    {
+    	if ($s == true) {
+    		return "true";
+    	} else {
+    		return "false";
+    	}
     }
     
     function validate() {
     	
+// 		echo $_POST['Days'] . "<br/>";
+// 		echo $_POST['Theaters'] . "<br/>";
+// 		echo $_POST['Movies'] . "<br/>";
+		
+// 		$GLOBALS['Days'] = $_POST['Days'];
+// 		$GLOBALS['Theaters'] = $_POST['Theaters'];
+// 		$GLOBALS['Movies'] = $_POST['Movies'];
+    	
+    	$this->load->model('theater_model');
+    	$this->load->model('movie_model');
+    	$this->load->model('showtime_model');
+    	$this->load->helper(array('form', 'url'));
     	$this->load->library('form_validation');
-    	$this->form_validation->set_rules("Movies", "Movies", "checkName");
-    	if ($this->form_validation->run() == FALSE) {
-    		
-    	}
-    		
-    	else {
-    	
-    	}
-    	
-    	
-    	
+
     	$date = $_POST["Days"];
-    	
+    	 
     	if (isset($_POST["Movies"])) {
     		$movie = $_POST["Movies"];
     	}
-    	
+    	 
     	if (isset($_POST["Theaters"])) {
     		$theater = $_POST["Theaters"];
     	}
     	
-		$this->load->model('showtime_model');
+    	$this->form_validation->set_rules('Movies', 'Movies', 'callback_movie_and_theater_both_not_empty');
     	
-    	$data['main']='main/selectTicket';
-    	$this->load->view('template', $data);
+    	if (($this->form_validation->run() == TRUE)) {
+// 	    	redirect('main/selectTicket');
+    		$data['main']='main/selectTicket';
+    		$this->load->view('template', $data);
+    	} 
+    	else {
+    		redirect('main/selectMovieVenueView');
+    	}
     	
     }
-    
-	function checkName($str) {
+
 	
-		return $str != "All films";
-		
+	function selectSeat() {
+			
 	}
-    
+	
+
 }
 

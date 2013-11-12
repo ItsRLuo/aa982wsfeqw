@@ -7,7 +7,6 @@
 	echo form_label("Select a date: \n");	
 
 	$curr_timestamp = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
-	
 	$dateArray = array();
 	for ($i = 0; $i < 13; $i++) {
 		
@@ -22,35 +21,37 @@
 	}
 	
 	echo form_dropdown("Days", $dateArray);
-	
 	echo "<br/><br/>"; 
 	
 	// Select a venue.
-	echo form_label("Select a venue AND/OR movie: \n");
+	echo form_error("Movies");
+	
+	echo form_label("Select a venue: \n");
 	$theater_names = array("" => "All venues");
 	$query_theater_names = $this->theater_model->get_theater_names();
 	foreach ($query_theater_names->result() as $theater_name) {
 		$theater_names[$theater_name->name] = $theater_name->name;
 	}
+	
 	echo form_dropdown("Theaters", $theater_names);
 	echo "<br></br>";
 
 	// Select a movie.
+	echo form_label("--OR--<br/><br/>Select a movie: \n");
 	$movie_names = array("" => "All films");
 	$query_movie_names = $this->movie_model->get_movie_names();
 	foreach ($query_movie_names->result() as $movie_name) {
 		$movie_names[$movie_name->title] = $movie_name->title;
 	}
-	echo form_dropdown("Movies", $movie_names);	
-// 	echo form_input("Movies");
+	
+	echo form_dropdown("Movies", $movie_names);
 	echo "<br></br>";
 	
 	// Find a movie!
 	echo form_submit('Search for Movie', 'Search for Movie');
-	
 	echo form_close();
 	
-	
+
 // echo form_open("main/buyTicket");
 // 
 

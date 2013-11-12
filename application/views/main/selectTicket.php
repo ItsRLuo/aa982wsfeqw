@@ -1,7 +1,7 @@
 
 <?php
 
-	echo form_open("main/selectTicket");
+	echo form_open("main/validate");
 	
 	
 	$movie_info_str = "Movie viewings" ;
@@ -41,16 +41,6 @@
 	echo form_submit('Select', 'Select');
 	
 	echo form_close();
-	// echo blahfoo;
-	
-// 	function filterCriteria($viewings, $movie, $date, $theater) {
-		
-// 		$x = $this->showtime_model->get_specific_showtimes($movie, $theater, $date);
-// 		foreach ($x->result() as $viewing) {
-// 			// printTicketInfo($viewing);
-// 		}
-		
-// 	}
 	
 	function printTicketInfo($viewing) {
 		$view_string = "%s at %s (%s), on %s, at %s, %s seats available";
