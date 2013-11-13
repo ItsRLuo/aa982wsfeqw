@@ -8,39 +8,11 @@ class Main extends CI_Controller {
     function __construct() {
     	// Call the Controller constructor
     	parent::__construct();
-    	session_start();
-    	
-    	$this->currYear = intval(date("Y"));
-    	$this->months = array("Select a month", "January", "February", "March", "April", "May", "June",
-    			"July", "August", "September", "October", "November", "December");
-    	$this->day = array_merge(array("Select a day"), range(1, 31));
-    	$this->year = array_merge(array("Select a year"), range($this->currYear, $this->currYear + 50));
     }
         
     function index() {
-    	$data['main']='main/index';
-    	$this->load->view('template', $data);
-    }
-    
-    function userInformation() {
-    	 
-    
-    	$this->load->model('theater_model');
-    	$this->load->model('movie_model');
-    	$data['main']='main/userInformation';
-    	$this->load->view('template', $data);
-    	 
-    }
-    
-    
-    function selectMovieVenueView() {
-    	
-
-    	$this->load->model('theater_model');
-    	$this->load->model('movie_model');
-    	$data['main']='main/selectMovieVenue';
-    	$this->load->view('template', $data);
-    	
+	    	$data['main']='main/index';
+	    	$this->load->view('template', $data);
     }
     
 	function showShowtimes()
@@ -102,55 +74,6 @@ class Main extends CI_Controller {
     	redirect('', 'refresh');
     
     }
-    
-    function selectTicket() {
-    	
-    	$this->load->model('movie_model');
-    	$this->load->model('theater_model');
-    	$this->load->model('showtime_model');
-    	
-    	$data['main']='main/selectTicket';
-    	$this->load->view('template', $data);
-    	
-    }
-    
-    function validate() {
-    	
-    	$this->load->library('form_validation');
-    	$this->form_validation->set_rules("Movies", "Movies", "checkName");
-    	if ($this->form_validation->run() == FALSE) {
-    		
-    	}
-    		
-    	else {
-    	
-    	}
-    	
-    	
-    	
-    	$date = $_POST["Days"];
-    	
-    	if (isset($_POST["Movies"])) {
-    		$movie = $_POST["Movies"];
-    	}
-    	
-    	if (isset($_POST["Theaters"])) {
-    		$theater = $_POST["Theaters"];
-    	}
-    	
-		$this->load->model('showtime_model');
-    	
-    	$data['main']='main/selectTicket';
-    	$this->load->view('template', $data);
-
-  
-    }
-    
-	function checkName($str) {
-	
-		return $str != "All films";
-		
-	}
     
 }
 
