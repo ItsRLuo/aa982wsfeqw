@@ -8,13 +8,29 @@ class Main extends CI_Controller {
     	// Call the Controller constructor
     	parent::__construct();
     	session_start();
+    	
+    	$this->currYear = intval(date("Y"));
+    	$this->months = array("Select a month", "January", "February", "March", "April", "May", "June",
+    			"July", "August", "September", "October", "November", "December");
+    	$this->day = array_merge(array("Select a day"), range(1, 31));
+    	$this->year = array_merge(array("Select a year"), range($this->currYear, $this->currYear + 50));
     }
         
     function index() {
     	$data['main']='main/index';
-    	$data['title'] = 'U of T Theater - Home Page';
     	$this->load->view('template', $data);
     }
+    
+    function userInformation() {
+    	 
+    
+    	$this->load->model('theater_model');
+    	$this->load->model('movie_model');
+    	$data['main']='main/userInformation';
+    	$this->load->view('template', $data);
+    	 
+    }
+    
     
     function selectMovieVenueView() {
     	
@@ -87,7 +103,6 @@ class Main extends CI_Controller {
 		}
 		
 		//Now we are prepared to call the view, passing all the necessary variables inside the $data array
-		$data['title'] = 'U of T Theater - Showtimes';
 		$data['main']='main/showtimes';
 		$this->load->view('template', $data);
     }
@@ -139,37 +154,12 @@ class Main extends CI_Controller {
     	}
     	$movie_info_str = $movie_info_str . " on " . $_POST["Days"] . ":<br/><br/>";
     	$data['movieInfoStr'] = $movie_info_str;
-    	
-    	$data['main']='main/selectTicket';
-    	$this->load->view('template', $data);
+
     	
     	$data['main']='main/selectTicket';
     	$data['title'] = 'U of T Theater - Select a Ticket';
-    	
     	$this->load->view('template', $data);
     	
-    }
-
-    public function movie_and_theater_both_not_empty($str)  {
-    	
-    	if (empty($str) and empty($_POST["Theaters"]))  
-    	{
-    		$this->form_validation->set_message("movie_and_theater_both_not_empty", "%s You must provide a venue AND/OR a movie!");
-    		return FALSE;
-    	}
-    	else
-    	{
-    		return TRUE;
-    	}
-    }
-    
-    function strbool($s)
-    {
-    	if ($s == true) {
-    		return "true";
-    	} else {
-    		return "false";
-    	}
     }
     
     function validate() {
@@ -194,8 +184,9 @@ class Main extends CI_Controller {
     		$theater = $_POST["Theaters"];
     	}
     	
-    	$this->form_validation->set_rules('Movies', 'Movies', 'callback_movie_and_theater_both_not_empty');
-    	
+    	$this->load->library('form_validation');
+    	$this->form_validation->set_rules("Movies", "Movies", "checkName");
+
     	if (($this->form_validation->run() == TRUE)) {
     		
     		// Return the movie info string.
@@ -224,8 +215,12 @@ class Main extends CI_Controller {
     		redirect('main/selectMovieVenueView');
     	}
     	
+    	
     }
-
+    
+	function checkName($str) {
+		return $str != "All films";
+	}
 	
 	function selectSeat() {
 		$this->load->model('theater_model');
@@ -248,8 +243,8 @@ class Main extends CI_Controller {
 		
 		$data['main']='main/selectSeat';
 		$this->load->view('template', $data);
-	}
-	
 
+	}
+    
 }
 

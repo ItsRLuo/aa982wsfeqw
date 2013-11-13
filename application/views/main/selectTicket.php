@@ -3,6 +3,7 @@
 
 	echo form_open("main/selectSeat");
  	echo $movieInfoStr;
+
 	
 	$numEntries = 0;
 	foreach ($viewings->result() as $viewing) {
@@ -14,13 +15,12 @@
 	}
 
 	echo $numEntries . " entries in total<br/>";
-	
-// 	echo form_dropdown("Viewings", $viewings_array, "None selected");
-	
+
 	echo "<br/>";
 	echo form_submit('Select', 'Select');
-	
-	echo form_close();
+
+	echo anchor('main/userInformation', 'Selects ') . "<br />";
+
 	
 	function getTicketInfo($viewing) {
 		$view_string = "%s at %s (%s), on %s, at %s, %s seats available";
