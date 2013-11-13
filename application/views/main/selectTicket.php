@@ -1,38 +1,18 @@
 
 <?php
 
-	echo form_open("main/validate");
-	
-	
-	$movie_info_str = "Movie viewings" ;
-	if ($_POST["Movies"] != "") {
-		$movie_info_str = $movie_info_str . " for " . $_POST["Movies"];
-	}
-	
-	if ($_POST["Theaters"] != "") {
-		$movie_info_str = $movie_info_str . " at " . $_POST["Theaters"];
-	}
-
-	$movie_info_str = $movie_info_str . " on " . $_POST["Days"];
-
-	
-	$movie_info_str = $movie_info_str . ":<br/><br/>";
-	echo $movie_info_str;
-	
-	$viewings_array = array("None selected");
-	$viewings = $this->showtime_model->get_specific_showtimes($_POST["Movies"], $_POST["Theaters"], $_POST["Days"]);
-
-	echo "<br/><br/>";
+	echo form_open("main/selectSeat");
+ 	echo $movieInfoStr;
 	
 	$numEntries = 0;
 	foreach ($viewings->result() as $viewing) {
-		// $view_string = "%s at %s (%s), on %s, %s, %s seats available";
-		echo form_checkbox(array("class" => "ticketSelect checkbox"));
-		printTicketInfo($viewing);
+		$ticketInfo = getTicketInfo($viewing);
+		echo form_checkbox(array("name" => "checkMe", "class" => "ticketSelect checkbox", 
+								  "value" => $numEntries));
+		echo $ticketInfo . "<br/>";
 		$numEntries += 1;
-		echo "<br/>";
 	}
-	
+
 	echo $numEntries . " entries in total<br/>";
 	
 // 	echo form_dropdown("Viewings", $viewings_array, "None selected");
@@ -42,10 +22,10 @@
 	
 	echo form_close();
 	
-	function printTicketInfo($viewing) {
+	function getTicketInfo($viewing) {
 		$view_string = "%s at %s (%s), on %s, at %s, %s seats available";
-		echo sprintf($view_string, $viewing->title, $viewing->name, $viewing->address,
-									$viewing->date, $viewing->time, $viewing->available) . "<br/>";
+		return sprintf($view_string, $viewing->title, $viewing->name, $viewing->address,
+				$viewing->date, $viewing->time, $viewing->available) . "<br/>";
 	}
 	
 ?>
