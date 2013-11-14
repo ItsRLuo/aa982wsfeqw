@@ -34,7 +34,6 @@ class Main extends CI_Controller {
     
     function selectMovieVenueView() {
     	
-
     	$this->load->model('theater_model');
     	$this->load->model('movie_model');
 
@@ -185,9 +184,9 @@ class Main extends CI_Controller {
     	}
     	
     	$this->load->library('form_validation');
-    	$this->form_validation->set_rules("Movies", "Movies", "checkName");
+    	$this->form_validation->set_rules("Movies", "Movies", "callback_checkUnfilledFields");
 
-    	if (($this->form_validation->run() == TRUE)) {
+    	if (($this->form_validation->run("Movies") == TRUE)) {
     		
     		// Return the movie info string.
     		$movie_info_str = "Movie viewings" ;
@@ -207,27 +206,74 @@ class Main extends CI_Controller {
     		
     		$_SESSION['viewings'] = $viewings;
     		$data['main']='main/selectTicket';
+    		
+    		
     		$this->load->view('template', $data);
     		$x = $_SESSION['viewings'];
     		
     	} 
     	else {
-    		redirect('main/selectMovieVenueView');
+	
+	    	// Get all the available DATES.
+	    	$curr_timestamp = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+	    	$dateArray = array();
+	    	for ($i = 0; $i < 13; $i++) {
+	    	
+	    		$curr_timestamp = mktime(0, 0, 0, date("m", $curr_timestamp),
+	    				date("d", $curr_timestamp) + 1, date("Y", $curr_timestamp));
+	    	
+	    		$curr_date = date("D, M d, Y", mktime(0,0,0,date("m", $curr_timestamp),
+	    				date("d", $curr_timestamp),date("Y", $curr_timestamp)));
+	    	
+	    		$dateArray[$curr_date] = $curr_date;
+	    	}
+	    	$data["dateArray"] = $dateArray;
+	    	
+	    	// Get all the theater names.
+	    	$theater_names = array("" => "All venues");
+	    	$query_theater_names = $this->theater_model->get_theater_names();
+	    	foreach ($query_theater_names->result() as $theater_name) {
+	    		$theater_names[$theater_name->name] = $theater_name->name;
+	    	}
+	    	$data["theater_names"] = $theater_names;
+	    	
+	    	// Get all movie names.
+	    	$movie_names = array("" => "All films");
+	    	$query_movie_names = $this->movie_model->get_movie_names();
+	    	foreach ($query_movie_names->result() as $movie_name) {
+	    		$movie_names[$movie_name->title] = $movie_name->title;
+	    	}
+	    	$data["movie_names"] = $movie_names;
+	    	
+	    	$data['title'] = 'U of T Theater - Select a Venue';
+	    	$data['main']='main/selectMovieVenue';
+	    	$this->load->view('template', $data);
     	}
     	
     	
     }
     
-	function checkName($str) {
-		return $str != "All films";
+	function checkUnfilledFields($str) {
+		
+		if (empty($str) and empty($_POST["Theaters"])) {
+			$this->form_validation->set_message("checkUnfilledFields", "Please select either a movie AND/OR a theater.");
+			return false;
+		} else {
+			return true;
+		}
+		
+		
 	}
 	
 	function selectSeat() {
+		
+		$this->load->library('form_validation');
+		
+		$this->form_validation->set_rules("checkMe", "checkMe", "required");
 		$this->load->model('theater_model');
 		$this->load->model('movie_model');
 		$this->load->model('showtime_model');
-		
-		echo $_POST['checkMe'] . "<br/>";
+		 
 		echo $_SESSION['Days'] . "<br/>";
 		echo $_SESSION['Movies'] . "<br/>";
 		echo $_SESSION['Theaters'] . "<br/>";
@@ -244,6 +290,11 @@ class Main extends CI_Controller {
 		$data['main']='main/selectSeat';
 		$this->load->view('template', $data);
 
+	}
+	
+	function processUserInfo() {
+		
+		
 	}
     
 }

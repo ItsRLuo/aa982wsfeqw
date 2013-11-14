@@ -17,7 +17,4 @@
 	echo "<br></br>";
 	echo form_submit('submit', 'submit');
 	echo form_close();
-	// 
-	
-
 ?>
