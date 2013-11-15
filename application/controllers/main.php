@@ -280,12 +280,8 @@ class Main extends CI_Controller {
 		
 		$viewings = $this->showtime_model->get_specific_showtimes($_SESSION["Movies"], $_SESSION["Theaters"], $_SESSION["Days"]);
 		$x = $viewings->row($_POST['checkMe']);
-		echo $x->title . "<br/>";
-		echo $x->name . "<br/>";
-		echo $x->address . "<br/>";
-		echo $x->date . "<br/>";
-		echo $x->time . "<br/>";
-		echo $x->available . "<br/>";
+		
+		$data['x'] = $x;
 		
 		$data['main']='main/selectSeat';
 		$this->load->view('template', $data);
