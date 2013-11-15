@@ -21,6 +21,12 @@ class Main extends CI_Controller {
     	$this->load->view('template', $data);
     }
     
+    function admin() {
+    	$data['main'] = 'main/admin';
+    	$this->load->view('template', $data);
+    	
+    }
+    
     function userInformation() {
     	 
     
@@ -290,6 +296,10 @@ class Main extends CI_Controller {
 	
 	function processUserInfo() {
 		
+		
+	}
+	
+	function customerInfo() {
 		
 	}
     

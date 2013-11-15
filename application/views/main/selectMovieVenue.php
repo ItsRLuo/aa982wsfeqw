@@ -14,12 +14,14 @@
 	
 	// Indicate if neither a movie NOR a theater was selected.
 	echo form_error("Movies", "<p id='empty_form_error'>", "</p>");
+	echo "<p id='empty_form_error_2'></p>";
+	
 	echo form_label("Select a venue AND/OR movie: \n");
 
-	echo form_dropdown("Theaters", $theater_names, set_value("Theaters"), array("id" => "theaterList"));
+	echo form_dropdown("Theaters", $theater_names, set_value("Theaters"), 'id = "theaterList"');
 	echo "<br></br>";
 
-	echo form_dropdown("Movies", $movie_names, set_value("Movies"), array("id" => "movieList"));	
+	echo form_dropdown("Movies", $movie_names, set_value("Movies"), 'id = "movieList"');	
 	echo "<br></br>";
 	
 	// Find a movie!

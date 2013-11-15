@@ -14,3 +14,6 @@ QUESTIONS TO ASK PROF:
 
 BEFORE HANDING IN:
 - Remember to get rid of the lines that print the query out!
+
+VALIDATE:
+- That the user has chosen EITHER a movie OR a theater.
