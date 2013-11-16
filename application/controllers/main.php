@@ -305,8 +305,45 @@ class Main extends CI_Controller {
 		
 	}
 	
-	function customerInfo() {
+	function ticketInfo() {
 		
+		//First we load the library and the model
+		$this->load->library('table');
+		$this->load->model('ticket_model');
+		
+// 		//Then we call our model's get_tickets function
+		$ticketList = $this->ticket_model->get_tickets();
+		
+// 		//If it returns some results we continue
+		if ($ticketList->num_rows() > 0){
+		
+			//Prepare the array that will contain the data
+			$table = array();
+		
+			$table[] = array('Ticket No.','First Name','Last Name','Credit Card Number',
+							'Credit Card Expiry Date', 'Showtime ID', 'Seat No.');
+		
+			foreach ($ticketList->result() as $row){
+				$table[] = array($row->ticket,$row->first,$row->last,$row->creditcardnumber,$row->creditcardexpiration,$row->showtime_id, $row->seat);
+			}
+
+// 			//Next step is to place our created array into a new array variable, one that we are sending to the view.
+			$data['ticketList'] = $table;
+		}
+		
+// 		//Now we are prepared to call the view, passing all the necessary variables inside the $data array
+		$data['main']='admin/ticketInfo';
+		
+		$this->load->view('template', $data);
+	}
+	
+	function populateTickets() {
+		$this->load->model('ticket_model');
+		
+		echo "Pfft!";
+		$this->ticket_model->populate(10);
+		$data['main']='main/index';
+		$this->load->view('template', $data);
 	}
     
 }

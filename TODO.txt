@@ -1,6 +1,7 @@
 - Consider possible test cases for names (liek apostrophes, tricky escape sequences, etc.)
 - For all cases of validatoin, provide both client AND server side validation.
 - Separate controller, model, view functionality.
+- For SQL, allow roll-back.
 
 QUESTIONS TO ASK PROF:
 - How to deal with form validation printing?
@@ -17,3 +18,4 @@ BEFORE HANDING IN:
 
 VALIDATE:
 - That the user has chosen EITHER a movie OR a theater.
+

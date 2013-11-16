@@ -68,6 +68,16 @@ class Showtime_model extends CI_Model {
 		return $query;
 	}
 	
+	function get_showtime_ids() {
+		$query = $this->db->query("select id from showtime s");
+		$show_ids = array();
+		foreach ($query->result() as $q) {
+			array_push($show_ids, $q->id);
+		}
+		return $show_ids;
+		
+	}
+	
 	
 }
 
