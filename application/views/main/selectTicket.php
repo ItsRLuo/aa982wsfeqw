@@ -7,8 +7,8 @@
 	
 	$numEntries = 0;
 	$g = $viewings->result();
-	
 	$ticketInfo = getTicketInfo($g[0]);
+	
 	echo form_checkbox(array("name" => "checkMe", "class" => "ticketSelect checkbox",
 			"value" => $numEntries, "checked" => true));
 	echo $ticketInfo . "<br/>";

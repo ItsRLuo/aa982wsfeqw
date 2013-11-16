@@ -1,7 +1,9 @@
 <?php
-
+	echo '<script type="text/javascript" src="' . base_url() . 'js/prototype.js"></script>';
+			
 	echo "<h1>Venue and Movie Selection</h1>";
 	echo form_open("main/validate");
+	
 	
 	// Select a time.
 	echo form_label("Select a date: \n");	
@@ -14,7 +16,6 @@
 	
 	// Indicate if neither a movie NOR a theater was selected.
 	echo form_error("Movies", "<p id='empty_form_error'>", "</p>");
-	echo "<p id='empty_form_error_2'></p>";
 	
 	echo form_label("Select a venue AND/OR movie: \n");
 
@@ -25,8 +26,9 @@
 	echo "<br></br>";
 	
 	// Find a movie!
-	echo form_submit(array("name" => 'Search for movie', "value" => 'Search for movie', 
-								'id' => 'filterCriteria'));
+	echo form_submit(array("name" => 'Search for movie', 
+							"value" => 'Search for movie', 
+							'id' => 'filterCriteria'));
 	
 	echo form_close();
 	

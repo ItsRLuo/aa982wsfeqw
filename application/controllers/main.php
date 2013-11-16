@@ -9,11 +9,11 @@ class Main extends CI_Controller {
     	parent::__construct();
     	session_start();
     	
-    	$this->currYear = intval(date("Y"));
-    	$this->months = array("Select a month", "January", "February", "March", "April", "May", "June",
-    			"July", "August", "September", "October", "November", "December");
-    	$this->day = array_merge(array("Select a day"), range(1, 31));
-    	$this->year = array_merge(array("Select a year"), range($this->currYear, $this->currYear + 50));
+//     	$this->currYear = intval(date("Y"));
+//     	$this->months = array("Select a month", "January", "February", "March", "April", "May", "June",
+//     			"July", "August", "September", "October", "November", "December");
+//     	$this->day = array_merge(array("Select a day"), range(1, 31));
+//     	$this->year = array_merge(array("Select a year"), range($this->currYear, $this->currYear + 50));
     }
         
     function index() {
@@ -279,7 +279,11 @@ class Main extends CI_Controller {
 		$this->load->model('theater_model');
 		$this->load->model('movie_model');
 		$this->load->model('showtime_model');
+		$this->load->model('ticket_model');
 		 
+		 
+		
+		
 		echo $_SESSION['Days'] . "<br/>";
 		echo $_SESSION['Movies'] . "<br/>";
 		echo $_SESSION['Theaters'] . "<br/>";
@@ -287,8 +291,10 @@ class Main extends CI_Controller {
 		$viewings = $this->showtime_model->get_specific_showtimes($_SESSION["Movies"], $_SESSION["Theaters"], $_SESSION["Days"]);
 		$x = $viewings->row($_POST['checkMe']);
 		
-		$data['x'] = $x;
+		$tickets_remaining = $this->ticket_model->get_tickets_by_id($x->tid);
 		
+		$data['tickets_remaining'] = $tickets_remaining;
+		$data['x'] = $x;
 		$data['main']='main/selectSeat';
 		$this->load->view('template', $data);
 

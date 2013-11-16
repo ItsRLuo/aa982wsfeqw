@@ -5,9 +5,9 @@
 	echo form_open("main/userInformation");
 	
 	echo "<div class='theaterContainer'>";
-		echo "<div class='seat leftSeat'></div>";
-		echo "<div class='seat rightSeat rs2'></div>";
-		echo "<div class='seat rightSeat rs1'></div>";	
+		echo "<div class='seat leftSeat seat1'></div>";
+		echo "<div class='seat rightSeat rs2 seat2'></div>";
+		echo "<div class='seat rightSeat rs1 seat3'></div>";	
 	echo "</div><br/>";
 	
 	echo form_submit("Select seat", "Select seat");
@@ -20,27 +20,29 @@
 	echo $x->date . "<br/>";
 	echo $x->time . "<br/>";
 	echo $x->available . "<br/>";
-	
+	echo $x->tid . "<br/>"	;
+
 ?>
 <script>
 $(document).ready(function() {
-	var x = parseInt("<?= $x->available ?>");
+	var js_array = [<?php echo implode(',', $tickets_remaining) ?>];
+	var seatStr = ".seat";
+
 	
-	$(".leftSeat").addClass("selected");
+	$(seatStr).addClass("occupied");
 	
-	if (x == 1) {
-		$(".rs2").addClass("occupied");
-		$(".rs1").addClass("occupied");
+	for (var i = 0; i < js_array.length; i++) {
+		var classStr = seatStr.concat(js_array[i].toString());
+		$(classStr).removeClass("occupied").addClass("vacant");
 	}
-	
-	if (x == 2) {
-		$(".rs2").addClass("occupied");
-		$(".rs1").addClass("vacant");
-	}
-	
-	if (x == 3) {
-		$(".rs2").addClass("vacant");
-		$(".rs1").addClass("vacant");
+
+	if (js_array.length == 0) {
+		alert("Something's wrong...we're not considering theaters with no seats available..");
+	} else {
+		var minSeat = Math.min.apply(null, js_array);
+		var classStr = seatStr.concat(minSeat.toString());
+		console.log(classStr);
+		$(classStr).addClass("selected");
 	}
 
 	$(".seat").bind("click", function() {
