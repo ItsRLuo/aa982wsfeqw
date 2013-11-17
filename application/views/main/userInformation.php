@@ -1,4 +1,5 @@
 <?php
+
 	echo "<h1>Payment</h1>";
 	echo form_open("main/index");
 	$credit_card = 0;

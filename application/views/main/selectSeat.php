@@ -1,4 +1,7 @@
 <?php
+
+	
+	echo "<h1>Select a Seat: </h1>";
 	echo "<link rel='stylesheet' type='text/css' href='" . base_url() . "css/graphicSeatSelection.css'>";
 	echo "<script src=" . base_url() . "scripts/graphicSeatSelection.js></script>";
 	

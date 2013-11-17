@@ -18,11 +18,14 @@ class Main extends CI_Controller {
         
     function index() {
     	$data['main']='main/index';
+    	$data['title'] = "U of T Theater - Pay for User Information";
     	$this->load->view('template', $data);
     }
     
     function admin() {
     	$data['main'] = 'main/admin';
+
+    	$data['title'] = "U of T Theater - Admin";
     	$this->load->view('template', $data);
     	
     }
@@ -33,6 +36,7 @@ class Main extends CI_Controller {
     	$this->load->model('theater_model');
     	$this->load->model('movie_model');
     	$data['main']='main/userInformation';
+    	$data['title'] = 'U of T: Enter User Information';
     	$this->load->view('template', $data);
     	 
     }
@@ -109,6 +113,9 @@ class Main extends CI_Controller {
 		
 		//Now we are prepared to call the view, passing all the necessary variables inside the $data array
 		$data['main']='main/showtimes';
+
+		$data['title'] = "U of T Theater - List of Showtimes</title>";
+		
 		$this->load->view('template', $data);
     }
     
@@ -175,6 +182,9 @@ class Main extends CI_Controller {
     	$this->load->helper(array('form', 'url'));
     	$this->load->library('form_validation');
 
+
+    	$data["title"] = "U of T Theater - Criteria Filtering";
+    	
     	$_SESSION["Days"] = $_POST["Days"];
     	$_SESSION["Theaters"] = $_POST["Theaters"];
     	$_SESSION["Movies"] = $_POST["Movies"];
@@ -294,6 +304,7 @@ class Main extends CI_Controller {
 		$tickets_remaining = $this->ticket_model->get_tickets_by_id($x->tid);
 		
 		$data['tickets_remaining'] = $tickets_remaining;
+		$data['title'] = "U of T Theater - Select a Seat</title>";
 		$data['x'] = $x;
 		$data['main']='main/selectSeat';
 		$this->load->view('template', $data);
@@ -332,17 +343,17 @@ class Main extends CI_Controller {
 		}
 		
 // 		//Now we are prepared to call the view, passing all the necessary variables inside the $data array
-		$data['main']='admin/ticketInfo';
-		
+		$data['main'] = 'admin/ticketInfo';
+		$data['title'] = 'U of T Theater - Viewing Selection';
 		$this->load->view('template', $data);
 	}
 	
 	function populateTickets() {
 		$this->load->model('ticket_model');
 		
-		echo "Pfft!";
 		$this->ticket_model->populate(10);
 		$data['main']='main/index';
+		$data['title'] = "U of T Theater - Admin - List of Tickets Sold";
 		$this->load->view('template', $data);
 	}
     

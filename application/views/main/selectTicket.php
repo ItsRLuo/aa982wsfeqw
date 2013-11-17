@@ -1,6 +1,7 @@
 
 <?php
-
+	
+	echo "<h1>Select a viewing: </h1>";
 	echo form_open("main/selectSeat");
  	echo $movieInfoStr;
 
