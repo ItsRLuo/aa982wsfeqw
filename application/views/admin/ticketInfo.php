@@ -1,7 +1,7 @@
 <?php
 	
 
-	echo anchor('','Back') . "<br />";
+	echo anchor('main/admin', 'Back') . "<br />";
 
 	echo "<h1>Ticket Info</h1>";
 
