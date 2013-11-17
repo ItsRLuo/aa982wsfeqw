@@ -26,28 +26,18 @@ class Main extends CI_Controller {
     	$data['main'] = 'main/admin';
     	$data['title'] = "U of T Theater - Admin";
     	$this->load->view('template', $data);
-    	
+
     }
     
     // Load the view that stores user information.
- function userInformation() {
-    	 
-
-    				$data['main']='main/userInformation';
-    				$this->load->view('template', $data);
-
-    			//else
-    			//{
-    			//	$this->load->view('index');
-    			//}
-    	
-
-    	
+    function userInformation() {
     	$this->load->model('theater_model');
     	$this->load->model('movie_model');
-
-    
- }
+    	$data['main']='main/userInformation';
+    	$data['title'] = 'U of T: Enter User Information';
+    	$this->load->view('template', $data);
+    	 
+    }
  
 
  
