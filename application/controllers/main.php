@@ -26,7 +26,7 @@ class Main extends CI_Controller {
     	$data['main'] = 'main/admin';
     	$data['title'] = "U of T Theater - Admin";
     	$this->load->view('template', $data);
-    	
+
     }
     
     // Load the view that stores user information.
@@ -40,7 +40,80 @@ class Main extends CI_Controller {
     	$this->load->view('template', $data);
     	 
     }
-    
+ 
+
+ 
+ function overview(){
+ 	$this->load->library('form_validation');
+ 		
+ 	$this->form_validation->set_rules('firstname', 'firstname', 'required');
+ 	$this->form_validation->set_rules('lastname', 'lastname', 'required');
+ 	$this->form_validation->set_rules('credit', 'credit', 'required|exact_length[16]|numeric');
+ 	$this->form_validation->set_rules('date', 'date', 'required|exact_length[5]|callback_checkExpireDate');
+
+ 	if ($this->form_validation->run() == FALSE)
+ 	{
+ 		$data['main']='main/userInformation';
+ 		$this->load->view('template', $data);
+ 	}
+	else{
+		$this->load->model('theater_model');
+		$this->load->model('movie_model');
+		$this->load->model('showtime_model');
+		
+		$viewings = $this->showtime_model->get_specific_showtimes($_SESSION["Movies"], $_SESSION["Theaters"], $_SESSION["Days"]);
+		$x = $viewings->row();
+		
+		$data['x'] = $x;
+		 
+		$data['main']='main/overview';
+		$this->load->view('template', $data);
+		
+	}
+    	 }
+ 
+ public function checkExpireDate($str)
+ {
+ 	$year = "20";
+ 	$year = ($year.substr($str,0,2));
+ 	$month = substr($str,3,5);
+
+ 	if (is_numeric(substr($str,2,3)) == True){
+ 		$this->form_validation->set_message('checkExpireDate', 'Input not in correct format');
+ 		return False;
+ 	}
+ 	$checkYear = 0;
+ 	$this->form_validation->set_message('checkExpireDate', 'Input must be integers');
+ 	$check = is_numeric($year);
+ 	if ($check == False){
+ 		return $check;
+ 	}
+ 	$check = is_numeric($month);
+ 	if ($check == False){
+ 		return $check;
+ 	}
+ 	if ($month > 12){
+ 		$this->form_validation->set_message('checkExpireDate', 'The month given is not correct');
+ 		return FALSE;
+ 	}
+ 	if ($year < (int)date("Y"))
+ 	{
+ 		$this->form_validation->set_message('checkExpireDate', 'The credit card already expired');
+ 		return FALSE;
+ 	}
+ 	if ($year == (int)date("Y")){
+ 		$checkYear = 1;
+ 	}
+ 	if ($checkYear == 1){
+ 		if($month < (int)date("m"))
+ 		{
+ 			$this->form_validation->set_message('checkExpireDate', 'The credit card already expired');
+ 			return FALSE;
+ 		}	
+ 	}
+ 	
+ 		return TRUE;
+ }
     
     function selectMovieVenueView() {
     	
