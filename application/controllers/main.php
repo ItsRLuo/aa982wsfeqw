@@ -31,6 +31,8 @@ class Main extends CI_Controller {
     
     // Load the view that stores user information.
     function userInformation() {
+
+    	$this->load->model('ticket_model');
     	$this->load->model('theater_model');
     	$this->load->model('movie_model');
     	$data['main']='main/userInformation';

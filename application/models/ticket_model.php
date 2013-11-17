@@ -97,13 +97,16 @@ class Ticket_model extends CI_Model {
 	function insertTicket($ticketID, $randFN, $randLN, $credNum, $creditCardexp, $showID, $seatNo) {
 		
 		// String representing the query
-		$str = "insert into g2chenri.ticket (ticket, first, last, creditcardnumber, 
+		$str = "insert into ticket (ticket, first, last, creditcardnumber, 
 				creditcardexpiration, showtime_id, seat) values ($ticketID, '$randFN', 
 				'$randLN', '$credNum', '$creditCardexp', $showID, $seatNo)";
 		
 		// Insert the ticket into the table.
 		$this->db->query($str);
 		
+		$str2 = "set ... update ";
+		$this->db->query($str2);
+		echo "qqqqqq";
 		// echo $str . "<br/>";
 	}
 	
