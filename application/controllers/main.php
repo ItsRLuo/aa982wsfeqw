@@ -5,34 +5,32 @@ class Main extends CI_Controller {
 	
     
     function __construct() {
-    	// Call the Controller constructor
+    	
+    	// Call the Controller constructor.
     	parent::__construct();
+    	
+    	// Allow session information to be stored.
     	session_start();
     	
-//     	$this->currYear = intval(date("Y"));
-//     	$this->months = array("Select a month", "January", "February", "March", "April", "May", "June",
-//     			"July", "August", "September", "October", "November", "December");
-//     	$this->day = array_merge(array("Select a day"), range(1, 31));
-//     	$this->year = array_merge(array("Select a year"), range($this->currYear, $this->currYear + 50));
     }
-        
+    
+    // Open the main page view.
     function index() {
     	$data['main']='main/index';
     	$data['title'] = "U of T Theater - Pay for User Information";
     	$this->load->view('template', $data);
     }
     
+    // Opens the admin view.
     function admin() {
     	$data['main'] = 'main/admin';
-
     	$data['title'] = "U of T Theater - Admin";
     	$this->load->view('template', $data);
     	
     }
     
+    // Load the view that stores user information.
     function userInformation() {
-    	 
-    
     	$this->load->model('theater_model');
     	$this->load->model('movie_model');
     	$data['main']='main/userInformation';
@@ -117,36 +115,6 @@ class Main extends CI_Controller {
 		$data['title'] = "U of T Theater - List of Showtimes</title>";
 		
 		$this->load->view('template', $data);
-    }
-    
-    function populate()
-    {
-	    $this->load->model('movie_model');
-	    $this->load->model('theater_model');
-	    $this->load->model('showtime_model');
-	     
-	    $this->movie_model->populate();
-	    $this->theater_model->populate();
-	    $this->showtime_model->populate();
-	     
-	    //Then we redirect to the index page again
-	    redirect('', 'refresh');
-	     
-    }
-    
-    function delete()
-    {
-	    $this->load->model('movie_model');
-	    $this->load->model('theater_model');
-	    $this->load->model('showtime_model');
-    	
-	    $this->movie_model->delete();
-	    $this->theater_model->delete();
-	    $this->showtime_model->delete();
-	     
-    	//Then we redirect to the index page again
-    	redirect('', 'refresh');
-    
     }
     
     function selectTicket() {
@@ -318,7 +286,7 @@ class Main extends CI_Controller {
 	
 	function ticketInfo() {
 		
-		//First we load the library and the model
+		// First we load the library and the model
 		$this->load->library('table');
 		$this->load->model('ticket_model');
 		
@@ -348,14 +316,7 @@ class Main extends CI_Controller {
 		$this->load->view('template', $data);
 	}
 	
-	function populateTickets() {
-		$this->load->model('ticket_model');
-		
-		$this->ticket_model->populate(10);
-		$data['main']='main/index';
-		$data['title'] = "U of T Theater - Admin - List of Tickets Sold";
-		$this->load->view('template', $data);
-	}
+
     
 }
 

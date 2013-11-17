@@ -10,9 +10,9 @@ echo "<h2>Pages</h2>";
 
  echo "<h2>Scripts</h2>";
  
- echo anchor('main/populateTickets', "Populate Ticket Table") . "<br />";
- echo anchor('main/populate','Populate Database') . "<br />";
- echo anchor('main/delete','Delete Database') . "<br />";  
+ echo anchor('sqlcontroller/populateTicketTables', "Populate Ticket Table") . "<br />";
+ echo anchor('sqlcontroller/populateMainTables', 'Populate Database') . "<br />";
+ echo anchor('sqlcontroller/deleteMainTables', 'Delete Database') . "<br />";  
  
 ?>
 
