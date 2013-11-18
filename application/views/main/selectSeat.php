@@ -1,6 +1,4 @@
 <?php
-
-	
 	echo "<h1>Select a Seat: </h1>";
 	echo "<link rel='stylesheet' type='text/css' href='" . base_url() . "css/graphicSeatSelection.css'>";
 	echo "<script src=" . base_url() . "scripts/graphicSeatSelection.js></script>";
@@ -8,12 +6,15 @@
 	echo form_open("main/userInformation");
 	
 	echo "<div class='theaterContainer'>";
-		echo "<div class='seat leftSeat seat1'></div>";
-		echo "<div class='seat rightSeat rs2 seat2'></div>";
-		echo "<div class='seat rightSeat rs1 seat3'></div>";	
+		echo "<div class='seat leftSeat seat1' value='1'></div>";
+		echo "<div class='seat rightSeat rs1 seat3' value='3'></div>";
+		echo "<div class='seat rightSeat rs2 seat2' value='2'></div>";
+		
 	echo "</div><br/>";
 	
-	echo form_submit("Select seat", "Select seat");
+	echo form_submit(array("name" => "Select seat", "value" => "Select seat", "id" => "submitSeatButton"));
+	
+	echo form_hidden("seatNo", "1");
 	echo form_close();
 	echo "<p class='seatsLeftError'></p>";
 
@@ -52,12 +53,12 @@ $(document).ready(function() {
 		if ($(this).hasClass("vacant")) {
 			$(".selected").addClass("vacant");
 			$(".selected").removeClass("selected");
+			$("[name='seatNo']").attr("value", $(this).attr("value"));
 			$(this).addClass("selected");
 			$(this).removeClass("vacant");
 		}
 	});
-	
-	
+
 	
 });
 </script>
