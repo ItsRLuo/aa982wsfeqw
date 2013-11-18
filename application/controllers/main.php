@@ -350,7 +350,6 @@ class Main extends CI_Controller {
 			return true;
 		}
 
-
 	}
 
 	function selectSeat() {
@@ -358,10 +357,11 @@ class Main extends CI_Controller {
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules("checkMe", "checkMe", "required");
+
+		$this->load->model('ticket_model');
 		$this->load->model('theater_model');
 		$this->load->model('movie_model');
 		$this->load->model('showtime_model');
-		$this->load->model('ticket_model');
 
 // 		echo $_SESSION['Days'] . "<br/>";
 // 		echo $_SESSION['Movies'] . "<br/>";

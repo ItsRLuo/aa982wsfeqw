@@ -8,7 +8,7 @@ class Ticket_model extends CI_Model {
 	}
 
 	function sqlColumnToArray($col) {
-	
+
 		$result = array();
 		while ($row = mysql_fetch_array($col)) {
 			$result[] = $row[$key];
@@ -18,6 +18,7 @@ class Ticket_model extends CI_Model {
 	}
 	
 	function get_tickets_by_id($id) {
+
 		$query = $this->db->query("select t.seat from ticket t where t.showtime_id = " . $id);
 		echo "<br/><br/>";
 		echo "foo";
@@ -30,8 +31,6 @@ class Ticket_model extends CI_Model {
 	}
 
 	function populate($n) {
-
-
 		
 		$months = range(1, 12);
 		foreach ($months as $month) {
@@ -51,9 +50,9 @@ class Ticket_model extends CI_Model {
 
 // 		echo "Data: ";
 
-		if (!isset($this->session->userdata("ticket_id"))) {
-			$this->session->userdata("ticket_id") = 1;
-		}
+// 		if (!isset($_SESSION["ticket_id"])) {
+// 			$_SESSION["ticket_id"] = 1;
+// 		}
 		
 		for ($i = 0; $i < 1000; $i++) {
 			$randFN = $firstNames[array_rand($firstNames)];
@@ -72,7 +71,7 @@ class Ticket_model extends CI_Model {
 // 			echo $showID . " ";
 // 			echo $seat . "<br/>";
 
-			$this->set_next_lowest_ticket_num();
+// 			$this->set_next_lowest_ticket_num();
 			
 // 			$q = $this->db->query("select ticket from ticket");
 // 			$result = array();
@@ -84,14 +83,14 @@ class Ticket_model extends CI_Model {
 // 				$ticketID++;
 // 			}
 			
-			$this->insertTicket($this->session->userdata("ticket_id"), $randFN, $randLN, $credNum, $creditCardexp, $showID, rand(1, 3));
+			$this->insertTicket($randFN, $randLN, $credNum, $creditCardexp, $showID, rand(1, 3));
 			
 // 			$str = "insert into g2chenri.ticket (ticket, first, last, creditcardnumber, creditcardexpiration, showtime_id, seat)
 // 			values ($ticketID, '$randFN', '$randLN', '$credNum', '$creditCardexp', $showID, " . rand(1, 3) . ')';
 // 			$this->db->query($str);
 // 			echo $str . "<br/>";
 				
-			$this->session->userdata("ticket_id")++;
+// 			$_SESSION["ticket_id"]++;
 		}
 
 	}
@@ -100,19 +99,22 @@ class Ticket_model extends CI_Model {
 		$this->db->query("delete from ticket");
 	}
 
-	function insertTicket($ticketID, $randFN, $randLN, $credNum, $creditCardExp, $showID, $seatNo) {
+	function insertTicket($randFN, $randLN, $credNum, $creditCardExp, $showID, $seatNo) {
 		
-		$this->load->library('session');
-		
-		if (!isset(in_array($this->session->userdata("ticket_id")))) {
-			in_array($this->session->userdata("ticket_id")) = 1;
+		if (!isset($_SESSION["ticket_id"])) {
+			$_SESSION["ticket_id"] = 1;
 		}
 		
-		echo "Credit card exp: " . $creditCardExp;
+		$this->set_next_lowest_ticket_num();
+// 		if (!isset(in_array($_SESSION["ticket_id"]))) {
+// 			$_SESSION["ticket_id"] = 1;
+// 		}
+		
+// 		echo "Credit card exp: " . $creditCardExp;
 	
 		// String representing the query
 		$str = "insert into ticket (ticket, first, last, creditcardnumber, 
-				creditcardexpiration, showtime_id, seat) values ($ticketID, '$randFN', 
+				creditcardexpiration, showtime_id, seat) values (" . $_SESSION["ticket_id"] . ", '$randFN', 
 				'$randLN', '$credNum', '$creditCardExp', $showID, $seatNo)";
 		
 		// Insert the ticket into the table.
@@ -126,16 +128,14 @@ class Ticket_model extends CI_Model {
 
 	function set_next_lowest_ticket_num() {
 		
-		$this->load->library('session');
-		
 		$q = $this->db->query("select ticket from ticket");
 		$result = array();
 		foreach ($q->result() as $item) {
 			array_push($result, $item->ticket);
 		}
 		
-		while (in_array($this->session->userdata("ticket_id"), $result)) {
-			$this->session->userdata("ticket_id")++;
+		while (in_array($_SESSION["ticket_id"], $result)) {
+			$_SESSION["ticket_id"]++;
 		}
 		
 	}
