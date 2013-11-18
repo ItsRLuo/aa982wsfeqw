@@ -1,12 +1,11 @@
 $(document).ready(function(str) {
- {
 	 var d = new Date();
 	 var curmonth = d.getMonth();
 	 var curyear = d.getFullYear();
 	 var year = "20";
  	year = (year + "" + str.substr(0,2));
  	var month = str.substr(3,5);
-
+ 
  	if (is_numeric(str.substr(2,3)) == true){
  		document.getElementById("checkExpireDate").setCustomValidity('Input not in correct format');
  		return false;
@@ -42,4 +41,4 @@ $(document).ready(function(str) {
  	}
  	
  		return true;		
-};});
+});

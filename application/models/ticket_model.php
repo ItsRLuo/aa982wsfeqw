@@ -21,7 +21,7 @@ class Ticket_model extends CI_Model {
 
 		$query = $this->db->query("select t.seat from ticket t where t.showtime_id = " . $id);
 		echo "<br/><br/>";
-		echo "foo";
+		//echo "foo";
 		$ticketsRemaining = array(1, 2, 3);
 		foreach ($query->result() as $ticket) {
 			array_diff($ticketsRemaining, array($ticket->seat));

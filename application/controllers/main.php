@@ -1,7 +1,7 @@
 <?php
 
 class Main extends CI_Controller {
-
+	public $no = 1;
 	function __construct() {
 		 
 		// Call the Controller constructor.
@@ -10,7 +10,6 @@ class Main extends CI_Controller {
 		// Allow session information to be stored.
 		session_start();
 		$_SESSION["ticket_no"] = 1;
-		 
 	}
 
 	// Open the main page view.
@@ -27,17 +26,11 @@ class Main extends CI_Controller {
 		$this->load->view('template', $data);
 
 	}
-
 	// Load the view that stores user information.
 	function userInformation() {
-
 		$this->load->model('ticket_model');
 		$this->load->model('theater_model');
 		$this->load->model('movie_model');
-		
-		echo $_POST["seatNo"];
-		$_SESSION["seatNo"] = $_POST["seatNo"];
-		echo $_SESSION["seatNo"];
 		
 		$data['main']='main/userInformation';
 		$data['title'] = 'U of T: Enter User Information';
@@ -45,10 +38,8 @@ class Main extends CI_Controller {
 	}
 
 	function overview(){
-		$this->load->library('form_validation');
-			
-		echo $_SESSION['seatNo'];
 		
+		$this->load->library('form_validation');
 		$this->form_validation->set_rules('firstname', 'firstname', 'required');
 		$this->form_validation->set_rules('lastname', 'lastname', 'required');
 		$this->form_validation->set_rules('credit', 'credit', 'required|exact_length[16]|numeric');
@@ -74,16 +65,16 @@ class Main extends CI_Controller {
 			$credit = $this->input->post('credit');
 			
 			$expiryDate = str_replace("/", "", $this->input->post('date'));
-			echo $this->input->post('date');
+			//echo $this->input->post('date');
 			
-			echo "User: ". $fname ." ". $lname . "<br/>"; 
-			echo "Credit Card: ". $credit. "<br/>";
-			echo "Movie Name: ". $x->title . "<br/>";
-			echo "Movie Threater: ".$x->name . "<br/>";
-			echo "Movie Address: ".$x->address . "<br/>";
-			echo "Date: ".$x->date . "<br/>";
-			echo "Time: ".$x->time . "<br/>";
-			echo "Available seats: ".$x->available . "<br/>";
+			//echo "User: ". $fname ." ". $lname . "<br/>"; 
+			//echo "Credit Card: ". $credit. "<br/>";
+			//echo "Movie Name: ". $x->title . "<br/>";
+			//echo "Movie Threater: ".$x->name . "<br/>";
+			//echo "Movie Address: ".$x->address . "<br/>";
+			//echo "Date: ".$x->date . "<br/>";
+			//echo "Time: ".$x->time . "<br/>";
+			//echo "Available seats: ".$x->available . "<br/>";
 			
 			$this->ticket_model->set_next_lowest_ticket_num();
 			
@@ -91,7 +82,7 @@ class Main extends CI_Controller {
 				$_SESSION["ticket_id"] = 1;
 			}
 			
-			$this->ticket_model->insertTicket($_SESSION["ticket_id"], $fname, $lname, $credit, $expiryDate, $_SESSION['showtimeID'], $_SESSION['seatNo']);
+			//$this->ticket_model->insertTicket($_SESSION["ticket_id"], $fname, $lname, $credit, $expiryDate, $_SESSION['showtimeID'], $_SESSION['seatNo']);
 			
 			$data['x'] = $x;
 				
@@ -370,7 +361,7 @@ class Main extends CI_Controller {
 		$viewings = $this->showtime_model->get_specific_showtimes($_SESSION["Movies"], $_SESSION["Theaters"], $_SESSION["Days"]);
 		$x = $viewings->row($_POST['checkMe']);
 		$_SESSION['showtimeID'] = $x->sid;
-		echo $_SESSION['showtimeID'];
+		//echo $_SESSION['showtimeID'];
 		
 		$tickets_remaining = $this->ticket_model->get_tickets_by_id($x->sid);
 		

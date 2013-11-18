@@ -18,14 +18,6 @@
 	echo form_close();
 	echo "<p class='seatsLeftError'></p>";
 
-	echo $x->title . "<br/>";
-	echo $x->name . "<br/>";
-	echo $x->address . "<br/>";
-	echo $x->date . "<br/>";
-	echo $x->time . "<br/>";
-	echo $x->available . "<br/>";
-	echo $x->tid . "<br/>"	;
-
 ?>
 <script>
 $(document).ready(function() {
