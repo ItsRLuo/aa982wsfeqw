@@ -30,7 +30,9 @@ class Main extends CI_Controller {
 		$this->load->model('ticket_model');
 		$this->load->model('theater_model');
 		$this->load->model('movie_model');
-		
+		$_POST["seatNo"];
+		$_SESSION["seatNo"] = $_POST["seatNo"];
+		$_SESSION["seatNo"];
 		$data['main']='main/userInformation';
 		$data['title'] = 'U of T: Enter User Information';
 		$this->load->view('template', $data);
@@ -38,6 +40,8 @@ class Main extends CI_Controller {
 
 	function overview(){
 		#load the validations
+		
+		
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('firstname', 'firstname', 'required');
 		$this->form_validation->set_rules('lastname', 'lastname', 'required');

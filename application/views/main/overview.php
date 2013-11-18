@@ -24,7 +24,6 @@
 	$numSeats = $numSeats - 1;
 	echo "Available seats: ".$numSeats. "<br/>";
 	$posSeats = "";
-	echo $_SESSION["seatNo"];
 	if ($_SESSION["seatNo"] == 1){
 		$posSeats = "Left";
 	}
