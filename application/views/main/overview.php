@@ -4,8 +4,7 @@
 	$lname = $this->input->post('lastname');
 	$credit = $this->input->post('credit');
 
-	echo '<a href="index"><img id="Icon" src="images/Logo.jpg" alt="return" class="backtext"/></a>';
-	
+	echo "<h1>Summary:</h1>";
 	echo "User: ". $fname ." ". $lname . "<br/>"; 
 	echo "Credit Card: ". $credit. "<br/>";
 	echo "Movie Name: ". $x->title . "<br/>";
@@ -16,6 +15,8 @@
 	echo "Available seats: ".$x->available . "<br/>";
 	echo "<br/>";
 	echo "<button onclick='printing()'>Print this page</button>";
+	echo '<a href="index"><img id="Icon" src="images/a.png" alt="return" class="backtext"/></a>';
+	
 ?>
 <script>
 function printing()
