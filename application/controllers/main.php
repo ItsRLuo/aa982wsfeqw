@@ -72,7 +72,9 @@ class Main extends CI_Controller {
 			$fname = $this->input->post('firstname');
 			$lname = $this->input->post('lastname');
 			$credit = $this->input->post('credit');
-			$expiryDate = $this->input->post('year');
+			
+			$expiryDate = str_replace("/", "", $this->input->post('date'));
+			echo $this->input->post('date');
 			
 			echo "User: ". $fname ." ". $lname . "<br/>"; 
 			echo "Credit Card: ". $credit. "<br/>";
@@ -84,6 +86,10 @@ class Main extends CI_Controller {
 			echo "Available seats: ".$x->available . "<br/>";
 			
 			$this->ticket_model->set_next_lowest_ticket_num();
+			
+			if (!isset($_SESSION["ticket_id"])) {
+				$_SESSION["ticket_id"] = 1;
+			}
 			
 			$this->ticket_model->insertTicket($_SESSION["ticket_id"], $fname, $lname, $credit, $expiryDate, $_SESSION['showtimeID'], $_SESSION['seatNo']);
 			
@@ -363,10 +369,10 @@ class Main extends CI_Controller {
 
 		$viewings = $this->showtime_model->get_specific_showtimes($_SESSION["Movies"], $_SESSION["Theaters"], $_SESSION["Days"]);
 		$x = $viewings->row($_POST['checkMe']);
-		$_SESSION['showtimeID'] = $x->tid;
+		$_SESSION['showtimeID'] = $x->sid;
 		echo $_SESSION['showtimeID'];
 		
-		$tickets_remaining = $this->ticket_model->get_tickets_by_id($x->tid);
+		$tickets_remaining = $this->ticket_model->get_tickets_by_id($x->sid);
 		
 		$data['tickets_remaining'] = $tickets_remaining;
 		$data['title'] = "U of T Theater - Select a Seat</title>";

@@ -4,7 +4,7 @@ class Showtime_model extends CI_Model {
 	function get_showtimes()
 	{
 		$query = $this->db->query("select m.title, t.name, t.address, s.date, s.time, s.available,
-								t.id AS tid
+								t.id AS tid, s.id AS sid
 								from movie m, theater t, showtime s
 								where m.id = s.movie_id and t.id=s.theater_id");
 		return $query;	
@@ -40,7 +40,7 @@ class Showtime_model extends CI_Model {
 		$date = date("Y-m-d", strtotime($date));
 // 		/echo $date;
 		
-		$qstring = "select m.title, t.name, t.address, s.date, s.time, s.available, t.id AS tid
+		$qstring = "select m.title, t.name, t.address, s.date, s.time, s.available, t.id AS tid, s.id AS sid
 								from movie m, theater t, showtime s
 								where m.id = s.movie_id and t.id = s.theater_id and s.available > 0";
 		$adjusted_qstring = "select m.title, t.name, t.address, s.date, s.time, s.available, t.id AS tid
