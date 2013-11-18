@@ -61,7 +61,7 @@ class Showtime_model extends CI_Model {
 		}
 		$qstring .= ";";
 		
-		echo "Query was: " . $adjusted_qstring . ";";
+		//echo "Query was: " . $adjusted_qstring . ";";
 	
 		$query = $this->db->query($qstring);
 		

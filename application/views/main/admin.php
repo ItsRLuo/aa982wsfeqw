@@ -21,4 +21,5 @@ echo anchor('main/showShowtimes', 'Display Showtime Table') . "<br /><br />";
 // echo anchor('', 'Populate Movie Table') . "<br />";
 // echo anchor('', 'Delete Movie Table') . "<br />";
 // echo anchor('', 'Display Movie Table') . "<br /><br />";
+echo anchor('main/index', 'Return') . "<br />";
 ?>

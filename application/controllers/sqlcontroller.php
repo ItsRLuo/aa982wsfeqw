@@ -16,6 +16,7 @@ class SQLcontroller extends CI_Controller {
     
     function populateMainTables()
     {
+    	#input everything to tables
     	$this->load->model('movie_model');
     	$this->load->model('theater_model');
     	$this->load->model('showtime_model');
@@ -30,6 +31,7 @@ class SQLcontroller extends CI_Controller {
     
     function deleteMainTables()
     {
+    	#Delete the tables
     	$this->load->model('movie_model');
     	$this->load->model('theater_model');
     	$this->load->model('showtime_model');
