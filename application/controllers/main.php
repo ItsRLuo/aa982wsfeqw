@@ -81,7 +81,7 @@ class Main extends CI_Controller {
 			echo "Time: ".$x->time . "<br/>";
 			echo "Available seats: ".$x->available . "<br/>";
 			
-			// insertTicket($x->ticket, $fname, $lname, $credit, $expiryDate, ???, $_SESSION['seatNo']);
+			// insertTicket(???, $fname, $lname, $credit, $expiryDate, ???, $_SESSION['seatNo']);
 			
 			$data['x'] = $x;
 				
