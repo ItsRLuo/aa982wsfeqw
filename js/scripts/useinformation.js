@@ -9,7 +9,7 @@ $(document).ready(function(str) {
  		return false;
  	}
  	var checkYear = 0;
- 	this.form_validation.set_message('checkExpireDate', 'Input must be integers');
+ 	document.getElementById("checkExpireDate").setCustomValidity("'Input must be integers'");
  	var check = isNaN(year);
  	if (check == true){
  		return false;
@@ -19,12 +19,12 @@ $(document).ready(function(str) {
  		return false;
  	}
  	if (month > 12){
- 		this.form_validation.set_message('checkExpireDate', 'The month given is not correct');
+ 	 	document.getElementById("checkExpireDate").setCustomValidity('The month given is not correct');
  		return false;
  	}
  	if (year < date("Y"))
  	{
- 		this.form_validation.set_message('checkExpireDate', 'The credit card already expired');
+ 	 	document.getElementById("checkExpireDate").setCustomValidity('The credit card already expired');
  		return false;
  	}
  	if (year == date("Y")){
@@ -33,9 +33,9 @@ $(document).ready(function(str) {
  	if (checkYear == 1){
  		if(month < date("m"))
  		{
- 			this.form_validation.set_message('checkExpireDate', 'The credit card already expired');
+ 		 	document.getElementById("checkExpireDate").setCustomValidity('The credit card already expired');
  			return false;
- 		}	
+ 		}
  	}
  	
  		return true;		
