@@ -1,7 +1,6 @@
 <?php
 
 class Main extends CI_Controller {
-	public $no = 1;
 	function __construct() {
 		 
 		// Call the Controller constructor.
@@ -38,13 +37,14 @@ class Main extends CI_Controller {
 	}
 
 	function overview(){
-		
+		#load the validations
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('firstname', 'firstname', 'required');
 		$this->form_validation->set_rules('lastname', 'lastname', 'required');
 		$this->form_validation->set_rules('credit', 'credit', 'required|exact_length[16]|numeric');
 		$this->form_validation->set_rules('date', 'date', 'required|exact_length[5]|callback_checkExpireDate');
 
+		#Return back to userInformation when the validation fails
 		if ($this->form_validation->run() == FALSE)
 		{
 			$data['main']='main/userInformation';
@@ -52,6 +52,7 @@ class Main extends CI_Controller {
 			
 		}
 		else{
+			#Loads the models
 			$this->load->model('theater_model');
 			$this->load->model('movie_model');
 			$this->load->model('showtime_model');
@@ -63,27 +64,12 @@ class Main extends CI_Controller {
 			$fname = $this->input->post('firstname');
 			$lname = $this->input->post('lastname');
 			$credit = $this->input->post('credit');
-			
 			$expiryDate = str_replace("/", "", $this->input->post('date'));
-			//echo $this->input->post('date');
-			
-			//echo "User: ". $fname ." ". $lname . "<br/>"; 
-			//echo "Credit Card: ". $credit. "<br/>";
-			//echo "Movie Name: ". $x->title . "<br/>";
-			//echo "Movie Threater: ".$x->name . "<br/>";
-			//echo "Movie Address: ".$x->address . "<br/>";
-			//echo "Date: ".$x->date . "<br/>";
-			//echo "Time: ".$x->time . "<br/>";
-			//echo "Available seats: ".$x->available . "<br/>";
-			
 			$this->ticket_model->set_next_lowest_ticket_num();
 			
 			if (!isset($_SESSION["ticket_id"])) {
 				$_SESSION["ticket_id"] = 1;
 			}
-			
-			//$this->ticket_model->insertTicket($_SESSION["ticket_id"], $fname, $lname, $credit, $expiryDate, $_SESSION['showtimeID'], $_SESSION['seatNo']);
-			
 			$data['x'] = $x;
 				
 			$data['main']='main/overview';
@@ -94,15 +80,23 @@ class Main extends CI_Controller {
 
 	public function checkExpireDate($str)
 	{
+		/*
+		 * Custom Validation for checking credit card expire date
+		 */
+		
+		#take the year and month out of $str
 		$year = "20";
 		$year = ($year.substr($str,0,2));
 		$month = substr($str,3,5);
-
-		if (is_numeric(substr($str,2,3)) == True){
+		
+		#Return false if its not in the right format (YY/MM)
+		if (substr($str,2,1) != "/"){
 			$this->form_validation->set_message('checkExpireDate', 'The expiring date provided is not in correct format!');
 			return False;
 		}
 		$checkYear = 0;
+		
+		#Return false if the dates are not integers
 		$this->form_validation->set_message('checkExpireDate', 'The expiring date must be integers! ');
 		$check = is_numeric($year);
 		if ($check == False){
@@ -112,10 +106,14 @@ class Main extends CI_Controller {
 		if ($check == False){
 			return $check;
 		}
+		
+		#Return false if the month value is more than 12
 		if ($month > 12){
 			$this->form_validation->set_message('checkExpireDate', 'Please provide a month in the range 01-12. ');
 			return FALSE;
 		}
+		
+		#Return false if the current year is more than the year inputted
 		if ($year < (int)date("Y"))
 		{
 			$this->form_validation->set_message('checkExpireDate', 'The credit card has already expired. ');
@@ -124,6 +122,7 @@ class Main extends CI_Controller {
 		if ($year == (int)date("Y")){
 			$checkYear = 1;
 		}
+		#Return false if the current month is more than the month inputted
 		if ($checkYear == 1){
 			if($month < (int)date("m"))
 			{
@@ -238,7 +237,9 @@ class Main extends CI_Controller {
 	}
 
 	function validate() {
-		 
+		/*
+		 * This page is to let the user select one option of the movies they would like to goto
+		 */
 		$this->load->model('theater_model');
 		$this->load->model('movie_model');
 		$this->load->model('showtime_model');

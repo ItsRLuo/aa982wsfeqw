@@ -1,10 +1,15 @@
 <?php
+	/*
+	 * This page is to let the user select a seating arrangement.
+	 */
+
 	echo "<h1>Select a Seat: </h1>";
 	echo "<link rel='stylesheet' type='text/css' href='" . base_url() . "css/graphicSeatSelection.css'>";
 	echo "<script src=" . base_url() . "scripts/graphicSeatSelection.js></script>";
 	
 	echo form_open("main/userInformation");
 	
+	#This has the 3 seats
 	echo "<div class='theaterContainer'>";
 		echo "<div class='seat leftSeat seat1' value='1'></div>";
 		echo "<div class='seat rightSeat rs1 seat3' value='3'></div>";
@@ -12,6 +17,7 @@
 		
 	echo "</div><br/>";
 	
+	#Sumbit the position of the seat the user will be sitting
 	echo form_submit(array("name" => "Select seat", "value" => "Select seat", "id" => "submitSeatButton"));
 	
 	echo form_hidden("seatNo", "1");

@@ -1,11 +1,15 @@
 <?php
+	/*
+	 * This is the summmary page when the user finish buying tickets
+	 * This page shows all the information of the purchase and can be printable
+	 */
 	$this->load->helper("form");
 	$fname = $this->input->post('firstname');
 	$lname = $this->input->post('lastname');
 	$credit = $this->input->post('credit');
 	$expire = $this->input->post('date');
 
-	
+	#Display everything
 	echo "<h1>Summary:</h1>";
 	echo "User: ". $fname ." ". $lname . "<br/>"; 
 	echo "Credit Card: ". $credit. "<br/>";
@@ -14,10 +18,13 @@
 	echo "Movie Address: ".$x->address . "<br/>";
 	echo "Date: ".$x->date . "<br/>";
 	echo "Time: ".$x->time . "<br/>";
+	
+	#The number of seats is always 1 lower
 	$numSeats = $x->available;
 	$numSeats = $numSeats - 1;
 	echo "Available seats: ".$numSeats. "<br/>";
 	$posSeats = "";
+	echo $_SESSION["seatNo"];
 	if ($_SESSION["seatNo"] == 1){
 		$posSeats = "Left";
 	}
@@ -29,24 +36,12 @@
 	}
 	echo "Position of the seat: ".$posSeats."<br/>";
 	echo "<br/>";
+	#A button for printing
 	echo "<button onclick='printing()'>Print this page</button>";
-	echo '<a href="index"><img id="Icon" src="images/a.png" alt="return" class="backtext"/></a>';
 	echo "<br />";
+	#A button for returning to the main page
 	echo anchor('main/index', 'Return') . "<br />";
 
-	//$data = array(
-	//		'ticket' => 1000,
-	//		'first' => $fname,
-	//		'last' => $lname,
-	//		'creditcardnumber' => $credit,
-	//		'creditcardexpiration' => "1234",
-	//		'showtime_id'   =>  2,
-	//		'seat'  =>  1
-	//);
-	
-	//$this->db->insert('ticket', $data);
-	//echo $this->db->last_query();
-	//echo $this->db->countall(Ticket_model);
 ?>
 <script>
 function printing()
