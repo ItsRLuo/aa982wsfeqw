@@ -1,9 +1,9 @@
 <div id="information">
 <?php
+	echo '<script type="text/javascript" src="' . base_url() . 'js/useinformation.js"></script>';
 	$this->load->helper("form");
 	echo validation_errors();
 	echo "<h1>Payment</h1>";
-	echo $this->ticket_model->get_tickets()->result();
 	$credit_card = 0;
 	
 	echo form_open("main/overview");
@@ -31,7 +31,7 @@
 	);
 	echo form_input($data);
 	
-	echo form_label("Credit card expiring date (Example YY/MM)","year");
+	echo form_label("Credit card expiring date (Example YY/MM)","date");
 	$data = array(
 			"name" => "date",
 			"id"   => "date",
