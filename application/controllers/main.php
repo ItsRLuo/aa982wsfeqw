@@ -56,7 +56,7 @@ class Main extends CI_Controller {
 			
 		}
 		else{
-			#Loads the models
+			#Loads the models and appropriate information
 			$this->load->model('theater_model');
 			$this->load->model('movie_model');
 			$this->load->model('showtime_model');
