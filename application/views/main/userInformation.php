@@ -1,9 +1,12 @@
 <div id="information">
 <?php
 	$this->load->helper("form");
+	
 	echo validation_errors();
+	echo "<script></script>";
 	echo "<h1>Payment</h1>";
-	echo $this->ticket_model->get_tickets()->result();
+	
+	// echo $this->ticket_model->get_tickets()->result();
 	$credit_card = 0;
 	
 	echo form_open("main/overview");

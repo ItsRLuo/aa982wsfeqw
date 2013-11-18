@@ -1,5 +1,5 @@
 <?php
-	echo '<script type="text/javascript" src="' . base_url() . 'js/prototype.js"></script>';
+	// echo '<script type="text/javascript" src="' . base_url() . 'js/prototype.js"></script>';
 	echo "<h1>Venue and Movie Selection</h1>";
 	echo form_open("main/validate");
 	

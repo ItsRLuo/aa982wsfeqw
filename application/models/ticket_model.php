@@ -104,10 +104,8 @@ class Ticket_model extends CI_Model {
 		// Insert the ticket into the table.
 		$this->db->query($str);
 		
-		$str2 = "set ... update ";
-		$this->db->query($str2);
-		echo "qqqqqq";
-		// echo $str . "<br/>";
+// 		$str2 = "set ... update ";
+// 		$this->db->query($str2);
 	}
 	
 	function get_theater_names() {
