@@ -6,11 +6,6 @@
 	echo validation_errors();
 	echo "<script></script>";
 	echo "<h1>Payment</h1>";
-<<<<<<< HEAD
-=======
-	
-	// echo $this->ticket_model->get_tickets()->result();
->>>>>>> 244a7816bd8ac49176978c6f695adb2d2bf6cf19
 	$credit_card = 0;
 	
 	echo form_open("main/overview");
