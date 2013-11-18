@@ -31,8 +31,10 @@ class Ticket_model extends CI_Model {
 
 	function populate($n) {
 
-		$ticketID = 1;
-
+		if (!isset($_SESSION["ticket_id"])) {
+			$_SESSION["ticket_id"] = 1;
+		}
+		
 		$months = range(1, 12);
 		foreach ($months as $month) {
 			$month = sprintf("%02d", $month);
@@ -67,25 +69,27 @@ class Ticket_model extends CI_Model {
 // 			echo $creditCardexp . " ";
 // 			echo $showID . " ";
 // 			echo $seat . "<br/>";
-				
-			$q = $this->db->query("select ticket from ticket");
-			$result = array();
-			foreach ($q->result() as $item) {
-				array_push($result, $item->ticket);
-			}
+
+			$this->set_next_lowest_ticket_num();
 			
-			while (in_array($ticketID, $result)) {
-				$ticketID++;
-			}
+// 			$q = $this->db->query("select ticket from ticket");
+// 			$result = array();
+// 			foreach ($q->result() as $item) {
+// 				array_push($result, $item->ticket);
+// 			}
 			
-			$this->insertTicket($ticketID, $randFN, $randLN, $credNum, $creditCardexp, $showID, rand(1, 3));
+// 			while (in_array($ticketID, $result)) {
+// 				$ticketID++;
+// 			}
+			
+			$this->insertTicket($_SESSION["ticket_id"], $randFN, $randLN, $credNum, $creditCardexp, $showID, rand(1, 3));
 			
 // 			$str = "insert into g2chenri.ticket (ticket, first, last, creditcardnumber, creditcardexpiration, showtime_id, seat)
 // 			values ($ticketID, '$randFN', '$randLN', '$credNum', '$creditCardexp', $showID, " . rand(1, 3) . ')';
 // 			$this->db->query($str);
 // 			echo $str . "<br/>";
 				
-			$ticketID++;
+			$_SESSION["ticket_id"]++;
 		}
 
 	}
@@ -112,7 +116,19 @@ class Ticket_model extends CI_Model {
 
 	}
 
-
+	function set_next_lowest_ticket_num() {
+		
+		$q = $this->db->query("select ticket from ticket");
+		$result = array();
+		foreach ($q->result() as $item) {
+			array_push($result, $item->ticket);
+		}
+		
+		while (in_array($_SESSION["ticket_id"], $result)) {
+			$_SESSION["ticket_id"]++;
+		}
+		
+	}
 	
 	
 }

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	document.getElementById("filterCriteria").onclick = function() {
+	$("#filterCriteria").click(function() {
 		if ($("#theaterList").val() == "" && $("#movieList").val() == "") {
 			document.getElementById("theaterList").setCustomValidity("Select either a movie or a theater");
 			document.getElementById("movieList").setCustomValidity("Select either a movie or a theater");
@@ -9,5 +9,5 @@ $(document).ready(function() {
 			document.getElementById("movieList").setCustomValidity("");
 			return true;
 		}
-	};
+	});
 });

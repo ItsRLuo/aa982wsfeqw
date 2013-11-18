@@ -9,6 +9,7 @@ class Main extends CI_Controller {
 		 
 		// Allow session information to be stored.
 		session_start();
+		$_SESSION["ticket_no"] = 1;
 		 
 	}
 
@@ -63,7 +64,8 @@ class Main extends CI_Controller {
 			$this->load->model('theater_model');
 			$this->load->model('movie_model');
 			$this->load->model('showtime_model');
-
+			$this->load->model('ticket_model');
+			
 			$viewings = $this->showtime_model->get_specific_showtimes($_SESSION["Movies"], $_SESSION["Theaters"], $_SESSION["Days"]);
 			$x = $viewings->row();
 
@@ -81,7 +83,9 @@ class Main extends CI_Controller {
 			echo "Time: ".$x->time . "<br/>";
 			echo "Available seats: ".$x->available . "<br/>";
 			
-			// insertTicket(???, $fname, $lname, $credit, $expiryDate, ???, $_SESSION['seatNo']);
+			$this->ticket_model->set_next_lowest_ticket_num();
+			
+			$this->ticket_model->insertTicket($_SESSION["ticket_id"], $fname, $lname, $credit, $expiryDate, $_SESSION['showtimeID'], $_SESSION['seatNo']);
 			
 			$data['x'] = $x;
 				
@@ -353,15 +357,17 @@ class Main extends CI_Controller {
 		$this->load->model('showtime_model');
 		$this->load->model('ticket_model');
 
-		echo $_SESSION['Days'] . "<br/>";
-		echo $_SESSION['Movies'] . "<br/>";
-		echo $_SESSION['Theaters'] . "<br/>";
+// 		echo $_SESSION['Days'] . "<br/>";
+// 		echo $_SESSION['Movies'] . "<br/>";
+// 		echo $_SESSION['Theaters'] . "<br/>";
 
 		$viewings = $this->showtime_model->get_specific_showtimes($_SESSION["Movies"], $_SESSION["Theaters"], $_SESSION["Days"]);
 		$x = $viewings->row($_POST['checkMe']);
-
+		$_SESSION['showtimeID'] = $x->tid;
+		echo $_SESSION['showtimeID'];
+		
 		$tickets_remaining = $this->ticket_model->get_tickets_by_id($x->tid);
-
+		
 		$data['tickets_remaining'] = $tickets_remaining;
 		$data['title'] = "U of T Theater - Select a Seat</title>";
 		$data['x'] = $x;
