@@ -80,10 +80,21 @@ class Showtime_model extends CI_Model {
 	
 	function decrement_availability($ticketID) {
 
-		$query = getShowtimeIDFromTicketID($ticketID);
+		$query = $this->getShowtimeIDFromTicketID($ticketID);
+		echo "<br>NUMBER: $query<br/>";
 		$str2 = "UPDATE showtime
 				   SET available = available - 1 
 					WHERE id = $query;";
+		$query2 = $this->db->query($str2);
+		
+	}
+	
+	function increment_availability($ticketID) {
+		
+		$query = $this->getShowtimeIDFromTicketID($ticketID);
+		$str2 = "UPDATE showtime
+		SET available = available + 1
+		WHERE id = $query;";
 		$query2 = $this->db->query($str2);
 		
 	}
@@ -93,7 +104,9 @@ class Showtime_model extends CI_Model {
 		$str1 = "SELECT S.id
 				FROM showtime S, ticket T
 				WHERE S.id = T.showtime_id and T.ticket = " . $ticketID;
+		
 		$query = $this->db->query($str1)->row()->id;
+		
 		return $query;
 	}
 	

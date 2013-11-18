@@ -52,8 +52,7 @@ class Ticket_model extends CI_Model {
 			$sids = $this->showtime_model->get_showtime_ids();
 			if (!$sids) {
 				return;
-			}	
-		
+			}
 			
 			$randFN = $firstNames[array_rand($firstNames)];
 			$randLN = $lastNames[array_rand($lastNames)];
@@ -70,15 +69,25 @@ class Ticket_model extends CI_Model {
 	}
 	
 	function delete() {
-		$this->db->query("delete from ticket");
+		
+		$str = "select ticket from ticket";
+		$q = $this->db->query($str);
+		
+		while ($q) {
+			$this->db->query('DELETE FROM ticket LIMIT 1');
+			$str = "select ticket from ticket";
+			$q = $this->db->query($str);
+		}
+		
+		
 	}
 
 	
 	function deleteTicket($ticketID) {
 		
-		$str = "delete from ticket where id = $ticketID";
+		$str = "delete from ticket where ticket = $ticketID";
 		$this->db->query($str);
-		$str2 = $this->showtime_model->getShowtimeIDFromTicketID($ticketID);
+		$this->showtime_model->increment_availability($ticketID);
 		
 	}
 	
@@ -89,6 +98,8 @@ class Ticket_model extends CI_Model {
 			$_SESSION["ticket_id"] = 1;
 		}
 		
+		
+		
 		$this->set_next_lowest_ticket_num();
 		
 		$str = "insert into ticket (ticket, first, last, creditcardnumber, 
@@ -97,7 +108,7 @@ class Ticket_model extends CI_Model {
 		
 		// Insert the ticket into the table.
 		$this->db->query($str);
-		
+		echo "Echo: " . $_SESSION["ticket_id"];
 		$this->showtime_model->decrement_availability($_SESSION["ticket_id"]);
 		
 	}
