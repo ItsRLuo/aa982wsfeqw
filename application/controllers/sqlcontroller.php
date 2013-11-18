@@ -24,9 +24,7 @@ class SQLcontroller extends CI_Controller {
     	$this->theater_model->populate();
     	$this->showtime_model->populate();
     
-    	//Then we redirect to the index page again
-//     	redirect('/main/admin.php', 'refresh');
-    	header('Location: /A2/index.php/main/admin');
+    	redirect('main/admin', 'refresh');
     
     }
     
@@ -40,26 +38,24 @@ class SQLcontroller extends CI_Controller {
     	$this->theater_model->delete();
     	$this->showtime_model->delete();
     
-    	//Then we redirect to the index page again
-    	header('Location: /A2/index.php/main/admin');
+    	redirect('main/admin', 'refresh');
     
     }
     
     function populateTicketTables() {
     	$this->load->model('ticket_model');
     	$this->ticket_model->populate(10);
-//     	$data['main']='main/admin.php';
-//     	$data['title'] = "U of T Theater - Admin - List of Tickets Sold";
-//     	$this->load->view('template', $data);
-//     	redirect('/main/admin.php', 'refresh');
-    	header('Location: /A2/index.php/main/admin');
+//     	redirect('main/admin', 'refresh');
+    	$data['main'] = 'main/admin';
+    	$data['title'] = "U of T Theater - Admin";
+    	$this->load->view('template', $data);
+		
     }
     
     function deleteTicketTables() {
     	$this->load->model('ticket_model');
     	$this->ticket_model->delete();
-//     	redirect('/main/admin.php', 'refresh');
-    	header('Location: /A2/index.php/main/admin');
+    	redirect('main/admin', 'refresh');
     }
     
 }

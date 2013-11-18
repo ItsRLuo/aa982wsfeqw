@@ -30,7 +30,7 @@ class Ticket_model extends CI_Model {
 		return $ticketsRemaining;
 	}
 
-	function populate($n) {
+	function populate() {
 		
 		$months = range(1, 12);
 		foreach ($months as $month) {
@@ -43,18 +43,18 @@ class Ticket_model extends CI_Model {
 		}
 
 		$this->load->model('showtime_model');
-		$sids = $this->showtime_model->get_showtime_ids();
+		
 
 		$lastNames = array('Abraham', 'Allan', 'Alsop', 'Anderson', 'Arnold', 'Avery', 'Bailey', 'Baker', 'Ball', 'Bell', 'Berry', 'Black', 'Blake', 'Bond', 'Bower', 'Brown', 'Buckland', 'Burgess', 'Butler', 'Cameron', 'Campbell', 'Carr', 'Chapman', 'Churchill', 'Clark', 'Clarkson', 'Coleman', 'Cornish', 'Davidson', 'Davies', 'Dickens', 'Dowd', 'Duncan', 'Dyer', 'Edmunds', 'Ellison', 'Ferguson', 'Fisher', 'Forsyth', 'Fraser', 'Gibson', 'Gill', 'Glover', 'Graham', 'Grant', 'Gray', 'Greene', 'Hamilton', 'Hardacre', 'Harris', 'Hart', 'Hemmings', 'Henderson', 'Hill', 'Hodges', 'Howard', 'Hudson', 'Hughes', 'Hunter', 'Ince', 'Jackson', 'James', 'Johnston', 'Jones', 'Kelly', 'Kerr', 'King', 'Knox', 'Lambert', 'Langdon', 'Lawrence', 'Lee', 'Lewis', 'Lyman', 'MacDonald', 'Mackay', 'Mackenzie', 'MacLeod', 'Manning', 'Marshall', 'Martin', 'Mathis', 'May', 'McDonald', 'McLean', 'McGrath', 'Metcalfe', 'Miller', 'Mills', 'Mitchell', 'Morgan', 'Morrison', 'Murray', 'Nash', 'Newman', 'Nolan', 'North', 'Ogden', 'Oliver', 'Paige', 'Parr', 'Parsons', 'Paterson', 'Payne', 'Peake', 'Peters', 'Piper', 'Poole', 'Powell', 'Pullman', 'Quinn', 'Rampling', 'Randall', 'Rees', 'Reid', 'Roberts', 'Robertson', 'Ross', 'Russell', 'Rutherford', 'Sanderson', 'Scott', 'Sharp', 'Short', 'Simpson', 'Skinner', 'Slater', 'Smith', 'Springer', 'Stewart', 'Sutherland', 'Taylor', 'Terry', 'Thomson', 'Tucker', 'Turner', 'Underwood', 'Vance', 'Vaughan', 'Walker', 'Wallace', 'Walsh', 'Watson', 'Welch', 'Whited', 'Wilkins', 'Wilson', 'Wright', 'Young');
 		$firstNames = array('Emerita', 'Marci', 'Shay', 'Holly', 'Letty', 'Alia', 'Raisa', 'Harriet', 'Roy', 'Jeneva', 'Krissy', 'Steffanie', 'Yolande', 'German', 'Candi', 'Juana', 'Arnetta', 'Tricia', 'Galina', 'Kylie', 'Linwood', 'Rosetta', 'Raven', 'Valery', 'Ai', 'Shantelle', 'See', 'Cristina', 'Booker', 'Kortney', 'Orlando', 'Lavera', 'Jolynn', 'Mervin', 'Mayra', 'Ariane', 'Sherryl', 'Gertrude', 'Tyron', 'Dante', 'Emmie', 'Rea', 'Germaine', 'Seth', 'Sona', 'Lindsy', 'Chelsie', 'Galen', 'Shila', 'Coletta', 'Venetta', 'Moira', 'Chad', 'Dione', 'Thaddeus', 'Maria', 'Lilia', 'Laurie', 'Duncan', 'Herta', 'Lekisha', 'Hassie', 'Maragret', 'Shawnna', 'Delmy', 'Rochel', 'Hayley', 'Jasper', 'Mariano', 'Gilberto', 'Daysi', 'Serina', 'Marilou', 'Sirena', 'Eugenie', 'Eve', 'Markus', 'Virgina', 'Kasey', 'Gilda', 'Jaqueline', 'Treena', 'Edison', 'Cherie', 'Donette', 'Jefferey', 'Jeffie', 'Charlette', 'Scarlett', 'Stacia', 'Catarina', 'Catheryn', 'Jeannine', 'Laverna', 'Shiloh', 'Carisa', 'Bunny', 'Dannielle', 'Edelmira', 'Marylynn');
-
-// 		echo "Data: ";
-
-// 		if (!isset($_SESSION["ticket_id"])) {
-// 			$_SESSION["ticket_id"] = 1;
-// 		}
 		
 		for ($i = 0; $i < 1000; $i++) {
+			$sids = $this->showtime_model->get_showtime_ids();
+			if (!$sids) {
+				return;
+			}	
+		
+			
 			$randFN = $firstNames[array_rand($firstNames)];
 			$randLN = $lastNames[array_rand($lastNames)];
 			$seat = rand(1, 3);
@@ -62,35 +62,9 @@ class Ticket_model extends CI_Model {
 				
 			$creditCardexp = sprintf("%04d", $months[array_rand($months)] . $years[array_rand($years)]);
 			$showID = $sids[array_rand($sids)];
-				
-// 			echo $ticketID . " ";
-// 			echo $randFN . " ";
-// 			echo $randLN . " ";
-// 			echo $credNum . " ";
-// 			echo $creditCardexp . " ";
-// 			echo $showID . " ";
-// 			echo $seat . "<br/>";
 
-// 			$this->set_next_lowest_ticket_num();
-			
-// 			$q = $this->db->query("select ticket from ticket");
-// 			$result = array();
-// 			foreach ($q->result() as $item) {
-// 				array_push($result, $item->ticket);
-// 			}
-			
-// 			while (in_array($ticketID, $result)) {
-// 				$ticketID++;
-// 			}
-			
 			$this->insertTicket($randFN, $randLN, $credNum, $creditCardexp, $showID, rand(1, 3));
-			
-// 			$str = "insert into g2chenri.ticket (ticket, first, last, creditcardnumber, creditcardexpiration, showtime_id, seat)
-// 			values ($ticketID, '$randFN', '$randLN', '$credNum', '$creditCardexp', $showID, " . rand(1, 3) . ')';
-// 			$this->db->query($str);
-// 			echo $str . "<br/>";
-				
-// 			$_SESSION["ticket_id"]++;
+
 		}
 
 	}
@@ -99,26 +73,32 @@ class Ticket_model extends CI_Model {
 		$this->db->query("delete from ticket");
 	}
 
+	
+	function deleteTicket($ticketID) {
+		
+		$str = "delete from ticket where id = $ticketID";
+		$this->db->query($str);
+		$str2 = $this->showtime_model->getShowtimeIDFromTicketID($ticketID);
+		
+	}
+	
 	function insertTicket($randFN, $randLN, $credNum, $creditCardExp, $showID, $seatNo) {
 		
+		// Prepare the insertion query string. 
 		if (!isset($_SESSION["ticket_id"])) {
 			$_SESSION["ticket_id"] = 1;
 		}
 		
 		$this->set_next_lowest_ticket_num();
-// 		if (!isset(in_array($_SESSION["ticket_id"]))) {
-// 			$_SESSION["ticket_id"] = 1;
-// 		}
 		
-// 		echo "Credit card exp: " . $creditCardExp;
-	
-		// String representing the query
 		$str = "insert into ticket (ticket, first, last, creditcardnumber, 
 				creditcardexpiration, showtime_id, seat) values (" . $_SESSION["ticket_id"] . ", '$randFN', 
 				'$randLN', '$credNum', '$creditCardExp', $showID, $seatNo)";
 		
 		// Insert the ticket into the table.
 		$this->db->query($str);
+		
+		$this->showtime_model->decrement_availability($_SESSION["ticket_id"]);
 		
 	}
 	
