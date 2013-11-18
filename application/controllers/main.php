@@ -98,11 +98,11 @@ class Main extends CI_Controller {
 		$month = substr($str,3,5);
 
 		if (is_numeric(substr($str,2,3)) == True){
-			$this->form_validation->set_message('checkExpireDate', 'THe input provided is not in correct format!');
+			$this->form_validation->set_message('checkExpireDate', 'The expiring date provided is not in correct format!');
 			return False;
 		}
 		$checkYear = 0;
-		$this->form_validation->set_message('checkExpireDate', 'Input must be integers! ');
+		$this->form_validation->set_message('checkExpireDate', 'The expiring date must be integers! ');
 		$check = is_numeric($year);
 		if ($check == False){
 			return $check;
