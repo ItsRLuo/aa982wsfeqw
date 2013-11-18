@@ -3,8 +3,8 @@ echo "<h1>U of T Theater - Admin</h1>";
 
 echo "<h2>Populate and Delete Tables</h2>";
 
-echo anchor('main/populate', 'Populate Movie, Theater, and Showtime Tables') . "<br />";
-echo anchor('main/delete', 'Delete Movie, Theater, and Showtime Tables') . "<br /><br />";
+echo anchor('sqlcontroller/populateMainTables', 'Populate Movie, Theater, and Showtime Tables') . "<br />";
+echo anchor('sqlcontroller/deleteMainTables', 'Delete Movie, Theater, and Showtime Tables') . "<br /><br />";
 
 echo anchor('sqlcontroller/populateTicketTables', 'Populate Ticket Table') . "<br />";
 echo anchor('sqlcontroller/deleteTicketTables', 'Delete Ticket Table') . "<br />";
