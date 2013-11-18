@@ -8,7 +8,7 @@ $(document).ready(function(str) {
  	var month = str.substr(3,5);
 
  	if (is_numeric(str.substr(2,3)) == true){
- 		this.form_validation.set_message('checkExpireDate', 'Input not in correct format');
+ 		document.getElementById("checkExpireDate").setCustomValidity('Input not in correct format');
  		return false;
  	}
  	var checkYear = 0;
