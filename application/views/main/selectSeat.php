@@ -45,7 +45,6 @@ $(document).ready(function() {
 	} else {
 		var minSeat = Math.min.apply(null, js_array);
 		var classStr = seatStr.concat(minSeat.toString());
-		console.log(classStr);
 		$(classStr).addClass("selected");
 	}
 
